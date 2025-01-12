@@ -1,12 +1,10 @@
 {
   "id": 1,
-  "updated": "2015-08-24T15:18:40Z",
   "abbreviation": "RL",
   "code": "FRA_1_",
   "members": [
     {
       "id": 10803,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "GE",
       "cantonName": "Genf",
       "council": "N",
@@ -27,7 +25,6 @@
     },
     {
       "id": 10804,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "ZH",
       "cantonName": "Zürich",
       "council": "N",
@@ -48,7 +45,6 @@
     },
     {
       "id": 4254,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "NE",
       "cantonName": "Neuenburg",
       "council": "N",
@@ -69,7 +65,6 @@
     },
     {
       "id": 4256,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "GE",
       "cantonName": "Genf",
       "council": "N",
@@ -90,7 +85,6 @@
     },
     {
       "id": 4257,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "VD",
       "cantonName": "Waadt",
       "council": "N",
@@ -111,7 +105,6 @@
     },
     {
       "id": 4190,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "SG",
       "cantonName": "St. Gallen",
       "council": "N",
@@ -132,7 +125,6 @@
     },
     {
       "id": 4259,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "TI",
       "cantonName": "Tessin",
       "council": "N",
@@ -153,7 +145,6 @@
     },
     {
       "id": 4077,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "VD",
       "cantonName": "Waadt",
       "council": "N",
@@ -174,7 +165,6 @@
     },
     {
       "id": 4265,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "GR",
       "cantonName": "Graubünden",
       "council": "N",
@@ -195,7 +185,6 @@
     },
     {
       "id": 10807,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "TI",
       "cantonName": "Tessin",
       "council": "N",
@@ -216,7 +205,6 @@
     },
     {
       "id": 10809,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "FR",
       "cantonName": "Freiburg",
       "council": "N",
@@ -237,7 +225,6 @@
     },
     {
       "id": 4208,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "AG",
       "cantonName": "Aargau",
       "council": "N",
@@ -258,7 +245,6 @@
     },
     {
       "id": 10810,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "SO",
       "cantonName": "Solothurn",
       "council": "N",
@@ -279,7 +265,6 @@
     },
     {
       "id": 4193,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "VS",
       "cantonName": "Wallis",
       "council": "N",
@@ -300,7 +285,6 @@
     },
     {
       "id": 4141,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "ZH",
       "cantonName": "Zürich",
       "council": "N",
@@ -321,7 +305,6 @@
     },
     {
       "id": 4313,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "AG",
       "cantonName": "Aargau",
       "council": "N",
@@ -342,7 +325,6 @@
     },
     {
       "id": 4329,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "VD",
       "cantonName": "Waadt",
       "council": "N",
@@ -363,7 +345,6 @@
     },
     {
       "id": 4202,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "ZH",
       "cantonName": "Zürich",
       "council": "N",
@@ -384,7 +365,6 @@
     },
     {
       "id": 4124,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "LU",
       "cantonName": "Luzern",
       "council": "N",
@@ -405,7 +385,6 @@
     },
     {
       "id": 4060,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "BL",
       "cantonName": "Basel-Landschaft",
       "council": "N",
@@ -426,7 +405,6 @@
     },
     {
       "id": 4290,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "ZH",
       "cantonName": "Zürich",
       "council": "N",
@@ -447,7 +425,6 @@
     },
     {
       "id": 10808,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "SZ",
       "cantonName": "Schwyz",
       "council": "N",
@@ -468,7 +445,6 @@
     },
     {
       "id": 10806,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "TG",
       "cantonName": "Thurgau",
       "council": "N",
@@ -489,7 +465,6 @@
     },
     {
       "id": 4296,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "SG",
       "cantonName": "St. Gallen",
       "council": "N",
@@ -510,7 +485,6 @@
     },
     {
       "id": 4324,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "BS",
       "cantonName": "Basel-Stadt",
       "council": "N",
@@ -531,7 +505,6 @@
     },
     {
       "id": 4142,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "ZH",
       "cantonName": "Zürich",
       "council": "N",
@@ -552,7 +525,6 @@
     },
     {
       "id": 3912,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "BE",
       "cantonName": "Bern",
       "council": "N",
@@ -573,7 +545,6 @@
     },
     {
       "id": 4194,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "VD",
       "cantonName": "Waadt",
       "council": "N",
@@ -594,7 +565,6 @@
     },
     {
       "id": 10805,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "VD",
       "cantonName": "Waadt",
       "council": "S",
@@ -615,7 +585,6 @@
     },
     {
       "id": 4189,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "AG",
       "cantonName": "Aargau",
       "council": "S",
@@ -636,7 +605,6 @@
     },
     {
       "id": 4075,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "AR",
       "cantonName": "Appenzell A.-Rh.",
       "council": "S",
@@ -657,7 +625,6 @@
     },
     {
       "id": 4151,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "UR",
       "cantonName": "Uri",
       "council": "S",
@@ -678,7 +645,6 @@
     },
     {
       "id": 4306,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "FR",
       "cantonName": "Freiburg",
       "council": "S",
@@ -699,7 +665,6 @@
     },
     {
       "id": 4116,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "SZ",
       "cantonName": "Schwyz",
       "council": "S",
@@ -720,7 +685,6 @@
     },
     {
       "id": 4309,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "ZG",
       "cantonName": "Zug",
       "council": "S",
@@ -741,7 +705,6 @@
     },
     {
       "id": 10802,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "GL",
       "cantonName": "Glarus",
       "council": "S",
@@ -762,7 +725,6 @@
     },
     {
       "id": 4207,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "LU",
       "cantonName": "Luzern",
       "council": "S",
@@ -783,7 +745,6 @@
     },
     {
       "id": 4078,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "GR",
       "cantonName": "Graubünden",
       "council": "S",
@@ -804,7 +765,6 @@
     },
     {
       "id": 4152,
-      "updated": "2025-01-12T19:59:52Z",
       "canton": "NW",
       "cantonName": "Nidwalden",
       "council": "S",
