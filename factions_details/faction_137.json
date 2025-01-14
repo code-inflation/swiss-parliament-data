@@ -144,6 +144,26 @@
       "factionFunction": 1
     },
     {
+      "id": 4208,
+      "canton": "AG",
+      "cantonName": "Aargau",
+      "council": "N",
+      "faction": "GL",
+      "factionName": "Grünliberale Fraktion",
+      "firstName": "Matthias Samuel",
+      "lastName": "Jauslin",
+      "number": 3109,
+      "party": "glp",
+      "partyName": "Grünliberale Partei",
+      "active": false,
+      "code": null,
+      "gender": "m",
+      "officialDenomination": null,
+      "salutationLetter": null,
+      "salutationTitle": null,
+      "factionFunction": 1
+    },
+    {
       "id": 4277,
       "canton": "BE",
       "cantonName": "Bern",

@@ -224,26 +224,6 @@
       "factionFunction": 1
     },
     {
-      "id": 4208,
-      "canton": "AG",
-      "cantonName": "Aargau",
-      "council": "N",
-      "faction": "RL",
-      "factionName": "FDP-Liberale Fraktion",
-      "firstName": "Matthias Samuel",
-      "lastName": "Jauslin",
-      "number": 3109,
-      "party": "FDP-Liberale",
-      "partyName": "FDP.Die Liberalen",
-      "active": false,
-      "code": null,
-      "gender": "m",
-      "officialDenomination": null,
-      "salutationLetter": null,
-      "salutationTitle": null,
-      "factionFunction": 1
-    },
-    {
       "id": 10810,
       "canton": "SO",
       "cantonName": "Solothurn",
