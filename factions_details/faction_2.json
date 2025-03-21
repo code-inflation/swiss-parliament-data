@@ -424,26 +424,6 @@
       "factionFunction": 1
     },
     {
-      "id": 1279,
-      "canton": "VD",
-      "cantonName": "Waadt",
-      "council": "N",
-      "faction": "S",
-      "factionName": "Sozialdemokratische Fraktion",
-      "firstName": "Roger",
-      "lastName": "Nordmann",
-      "number": 2648,
-      "party": "SP",
-      "partyName": "Sozialdemokratische Partei der Schweiz",
-      "active": false,
-      "code": null,
-      "gender": "m",
-      "officialDenomination": null,
-      "salutationLetter": null,
-      "salutationTitle": null,
-      "factionFunction": 1
-    },
-    {
       "id": 3899,
       "canton": "BL",
       "cantonName": "Basel-Landschaft",
