@@ -944,26 +944,6 @@
       "factionFunction": 1
     },
     {
-      "id": 11504,
-      "canton": "SH",
-      "cantonName": "Schaffhausen",
-      "council": "S",
-      "faction": "S",
-      "factionName": "Sozialdemokratische Fraktion",
-      "firstName": "Simon",
-      "lastName": "Stocker",
-      "number": 11504,
-      "party": "SP",
-      "partyName": "Sozialdemokratische Partei der Schweiz",
-      "active": false,
-      "code": null,
-      "gender": "m",
-      "officialDenomination": null,
-      "salutationLetter": null,
-      "salutationTitle": null,
-      "factionFunction": 1
-    },
-    {
       "id": 4224,
       "canton": "BE",
       "cantonName": "Bern",
