@@ -284,6 +284,26 @@
       "factionFunction": 1
     },
     {
+      "id": 15004,
+      "canton": "VD",
+      "cantonName": "Waadt",
+      "council": "N",
+      "faction": "S",
+      "factionName": "Sozialdemokratische Fraktion",
+      "firstName": "Benoît",
+      "lastName": "Gaillard",
+      "number": 15004,
+      "party": "SP",
+      "partyName": "Sozialdemokratische Partei der Schweiz",
+      "active": false,
+      "code": null,
+      "gender": "m",
+      "officialDenomination": null,
+      "salutationLetter": null,
+      "salutationTitle": null,
+      "factionFunction": 1
+    },
+    {
       "id": 4121,
       "canton": "SG",
       "cantonName": "St. Gallen",
