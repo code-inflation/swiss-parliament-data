@@ -484,6 +484,26 @@
       "factionFunction": 1
     },
     {
+      "id": 4260,
+      "canton": "NE",
+      "cantonName": "Neuenburg",
+      "council": "S",
+      "faction": "G",
+      "factionName": "Grüne Fraktion",
+      "firstName": "Fabien",
+      "lastName": "Fivaz",
+      "number": 3152,
+      "party": "GRÜNE",
+      "partyName": "GRÜNE Schweiz",
+      "active": false,
+      "code": null,
+      "gender": "m",
+      "officialDenomination": null,
+      "salutationLetter": null,
+      "salutationTitle": null,
+      "factionFunction": 11
+    },
+    {
       "id": 806,
       "canton": "BL",
       "cantonName": "Basel-Landschaft",
