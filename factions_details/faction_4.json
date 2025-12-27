@@ -1304,26 +1304,6 @@
       "factionFunction": 1
     },
     {
-      "id": 21646,
-      "canton": "AR",
-      "cantonName": "Appenzell A.-Rh.",
-      "council": "N",
-      "faction": "V",
-      "factionName": "Fraktion der Schweizerischen Volkspartei",
-      "firstName": "David",
-      "lastName": "Zuberbühler",
-      "number": 3102,
-      "party": "SVP",
-      "partyName": "Schweizerische Volkspartei",
-      "active": true,
-      "code": null,
-      "gender": "m",
-      "officialDenomination": null,
-      "salutationLetter": null,
-      "salutationTitle": null,
-      "factionFunction": 1
-    },
-    {
       "id": 21639,
       "canton": "BL",
       "cantonName": "Basel-Landschaft",
