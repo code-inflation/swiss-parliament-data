@@ -1,4 +1,11 @@
 #!/bin/bash
+set -euo pipefail
+
+# Cleanup trap for temp files
+cleanup() {
+  rm -f "$tmp_groups" "$ids_file" 2>/dev/null || true
+}
+trap cleanup EXIT
 
 base_url="https://api.openparldata.ch/v1"
 groups_endpoint="/groups/"
@@ -13,8 +20,20 @@ fetch_groups() {
   local offset=0
   while true; do
     local response
-    response=$(curl -s -H "User-Agent: $user_agent" \
+    response=$(curl -sf --retry 3 --retry-delay 5 -H "User-Agent: $user_agent" \
       "$base_url$groups_endpoint?type_harmonized_id=4&body_key=CHE&offset=$offset&limit=$limit")
+
+    if [ $? -ne 0 ]; then
+      echo "ERROR: curl failed for groups endpoint" >&2
+      return 1
+    fi
+
+    # Validate JSON has .data array
+    if ! echo "$response" | jq -e '.data' > /dev/null 2>&1; then
+      echo "ERROR: Invalid JSON response from groups API" >&2
+      return 1
+    fi
+
     echo "$response" | jq -c '.data[] | select(.active == true)'
     local has_more
     has_more=$(echo "$response" | jq -r '.meta.has_more')
@@ -27,8 +46,26 @@ fetch_groups() {
 
 tmp_groups=$(mktemp)
 fetch_groups > "$tmp_groups"
+
+if [ ! -s "$tmp_groups" ]; then
+  echo "ERROR: fetch_groups returned empty response" >&2
+  rm -f "$tmp_groups"
+  exit 1
+fi
+
 ids_file=$(mktemp)
 jq -r '.external_alternative_id // empty' "$tmp_groups" | sort -u > "$ids_file"
+
+# Count IDs from API
+new_ids_count=$(wc -l < "$ids_file")
+echo "Faction IDs from API: $new_ids_count"
+
+# CRITICAL: Abort if API returned zero IDs
+if [ "$new_ids_count" -eq 0 ]; then
+  echo "ERROR: API returned 0 faction IDs. Aborting to prevent data loss." >&2
+  rm -f "$tmp_groups" "$ids_file"
+  exit 1
+fi
 
 for existing in "$output_dir"/faction_*.json; do
   if [ ! -e "$existing" ]; then
@@ -57,8 +94,14 @@ while read -r group; do
   tmp_memberships=$(mktemp)
   offset=0
   while true; do
-    response=$(curl -s -H "User-Agent: $user_agent" \
+    response=$(curl -sf --retry 3 --retry-delay 5 -H "User-Agent: $user_agent" \
       "$base_url$memberships_endpoint?group_id=$group_id&expand=person&offset=$offset&limit=$limit")
+
+    if [ $? -ne 0 ]; then
+      echo "WARNING: curl failed for memberships of group $group_id at offset $offset" >&2
+      break  # Continue to next faction rather than abort entirely
+    fi
+
     echo "$response" | jq -c '.data[]' >> "$tmp_memberships"
     has_more=$(echo "$response" | jq -r '.meta.has_more')
     if [ "$has_more" != "true" ]; then
