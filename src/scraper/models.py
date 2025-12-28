@@ -65,23 +65,23 @@ class Member(BaseModel):
     """Member information in faction output."""
 
     id: int | None = None
+    canton: str | None = None
+    cantonName: str | None = None
+    council: str | None = None
+    faction: str
+    factionName: str
     firstName: str | None = None
     lastName: str | None = None
     number: int | None = None
     party: str | None = None
     partyName: str | None = None
-    faction: str
-    factionName: str
-    council: str | None = None
-    canton: str | None = None
-    cantonName: str | None = None
-    gender: str | None = None
     active: bool | None = None
-    factionFunction: int | None = None
     code: None = None
+    gender: str | None = None
     officialDenomination: None = None
     salutationLetter: None = None
     salutationTitle: None = None
+    factionFunction: int | None = None
 
 
 class Faction(BaseModel):
@@ -90,6 +90,6 @@ class Faction(BaseModel):
     id: int
     abbreviation: str
     code: str
+    members: list[Member]
     name: str
     shortName: str
-    members: list[Member]
