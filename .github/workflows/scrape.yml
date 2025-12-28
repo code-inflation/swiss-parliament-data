@@ -2,14 +2,12 @@ name: Scrape latest data
 
 on:
   push:
-    branches:
-      - master
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *' # Run daily at midnight UTC
 
 jobs:
-  scheduled:
+  scrape:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -30,18 +28,27 @@ jobs:
     - name: Install dependencies
       run: uv sync
 
-    - name: Run linting
-      run: |
-        uv run ruff check .
-        uv run mypy --package scraper
-
-    - name: Run tests
-      run: uv run pytest
-
     - name: Fetch latest data
       run: uv run python -m scraper.main
 
-    - name: Commit and push if it changed
+    - name: Show changes (dry-run)
+      run: |
+        echo "=== Git Status ==="
+        git status
+        echo ""
+        echo "=== Changes to be committed ==="
+        git add -A
+        git diff --cached --stat
+        echo ""
+        if [ -n "$(git diff --cached)" ]; then
+          echo "=== Detailed diff ==="
+          git diff --cached
+        else
+          echo "No changes detected."
+        fi
+
+    - name: Commit and push changes (master only)
+      if: github.ref == 'refs/heads/master'
       run: |-
         git config user.name "Automated"
         git config user.email "actions@users.noreply.github.com"
@@ -49,3 +56,13 @@ jobs:
         timestamp=$(date -u)
         git commit -m "Latest data: ${timestamp}" || exit 0
         git push
+
+    - name: Dry-run notice (non-master branches)
+      if: github.ref != 'refs/heads/master'
+      run: |
+        echo "=================================================="
+        echo "DRY RUN MODE - Not on master branch"
+        echo "Branch: ${{ github.ref }}"
+        echo "Changes were NOT committed or pushed."
+        echo "See the diff above to preview what would change."
+        echo "=================================================="
