@@ -4,6 +4,26 @@
   "code": "FRA_4_",
   "members": [
     {
+      "id": 25134,
+      "canton": "AR",
+      "cantonName": "Appenzell A.-Rh.",
+      "council": null,
+      "faction": "V",
+      "factionName": "Fraktion der Schweizerischen Volkspartei",
+      "firstName": "Edgar",
+      "lastName": "Bischof",
+      "number": 16706,
+      "party": "SVP",
+      "partyName": "Schweizerische Volkspartei",
+      "active": true,
+      "code": null,
+      "gender": "m",
+      "officialDenomination": null,
+      "salutationLetter": null,
+      "salutationTitle": null,
+      "factionFunction": 1
+    },
+    {
       "id": 21640,
       "canton": "ZH",
       "cantonName": "Zürich",
