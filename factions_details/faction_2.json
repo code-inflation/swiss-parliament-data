@@ -44,15 +44,15 @@
       "factionFunction": 1
     },
     {
-      "id": 21452,
+      "id": 7423,
       "canton": "BE",
       "cantonName": "Bern",
-      "council": "N",
+      "council": null,
       "faction": "S",
       "factionName": "Sozialdemokratische Fraktion",
       "firstName": "Nadine",
       "lastName": "Masshardt",
-      "number": 3034,
+      "number": null,
       "party": "SP",
       "partyName": "Sozialdemokratische Partei",
       "active": true,
