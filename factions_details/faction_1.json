@@ -25,8 +25,8 @@
     },
     {
       "id": 21661,
-      "canton": "VD",
-      "cantonName": "Waadt",
+      "canton": null,
+      "cantonName": "Riviera - PdE / Vevey",
       "council": "N",
       "faction": "RL",
       "factionName": "FDP-Liberale Fraktion",
@@ -45,8 +45,8 @@
     },
     {
       "id": 21660,
-      "canton": "VS",
-      "cantonName": "Wallis",
+      "canton": null,
+      "cantonName": "Monthey",
       "council": "N",
       "faction": "RL",
       "factionName": "FDP-Liberale Fraktion",
@@ -605,8 +605,8 @@
     },
     {
       "id": 21546,
-      "canton": "VD",
-      "cantonName": "Waadt",
+      "canton": null,
+      "cantonName": "Nyon",
       "council": "N",
       "faction": "RL",
       "factionName": "FDP-Liberale Fraktion",

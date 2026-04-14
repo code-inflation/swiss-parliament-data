@@ -265,8 +265,8 @@
     },
     {
       "id": 21735,
-      "canton": "VS",
-      "cantonName": "Wallis",
+      "canton": null,
+      "cantonName": "Sierre",
       "council": "N",
       "faction": "M-E",
       "factionName": "Die Mitte-Fraktion. Die Mitte. EVP.",
@@ -365,8 +365,8 @@
     },
     {
       "id": 21698,
-      "canton": "VS",
-      "cantonName": "Wallis",
+      "canton": null,
+      "cantonName": "Brig",
       "council": "N",
       "faction": "M-E",
       "factionName": "Die Mitte-Fraktion. Die Mitte. EVP.",
@@ -425,8 +425,8 @@
     },
     {
       "id": 16948,
-      "canton": "VS",
-      "cantonName": "Wallis",
+      "canton": null,
+      "cantonName": "Westlich Raron",
       "council": "S",
       "faction": "M-E",
       "factionName": "Die Mitte-Fraktion. Die Mitte. EVP.",
