@@ -5,8 +5,8 @@
   "members": [
     {
       "id": 25134,
-      "canton": "AR",
-      "cantonName": "Appenzell A.-Rh.",
+      "canton": null,
+      "cantonName": "Teufen",
       "council": "N",
       "faction": "V",
       "factionName": "Fraktion der Schweizerischen Volkspartei",
@@ -165,8 +165,8 @@
     },
     {
       "id": 21625,
-      "canton": "AG",
-      "cantonName": "Aargau",
+      "canton": null,
+      "cantonName": "Zofingen",
       "council": "N",
       "faction": "V",
       "factionName": "Fraktion der Schweizerischen Volkspartei",
@@ -1004,15 +1004,15 @@
       "factionFunction": 1
     },
     {
-      "id": 18712,
+      "id": 7495,
       "canton": "BE",
       "cantonName": "Bern",
-      "council": "N",
+      "council": null,
       "faction": "V",
       "factionName": "Fraktion der Schweizerischen Volkspartei",
       "firstName": "Thomas",
       "lastName": "Knutti",
-      "number": 10832,
+      "number": null,
       "party": "SVP",
       "partyName": "Schweizerische Volkspartei",
       "active": true,

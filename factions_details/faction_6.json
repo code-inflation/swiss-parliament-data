@@ -385,8 +385,8 @@
     },
     {
       "id": 21707,
-      "canton": "GL",
-      "cantonName": "Glarus",
+      "canton": null,
+      "cantonName": "Glarus Süd",
       "council": "S",
       "faction": "G",
       "factionName": "Grüne Fraktion",

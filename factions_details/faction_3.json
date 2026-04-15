@@ -184,15 +184,15 @@
       "factionFunction": 1
     },
     {
-      "id": 21757,
+      "id": 345,
       "canton": "UR",
       "cantonName": "Uri",
-      "council": "N",
+      "council": null,
       "faction": "M-E",
       "factionName": "Die Mitte-Fraktion. Die Mitte. EVP.",
       "firstName": "Simon",
       "lastName": "Stadler",
-      "number": 3184,
+      "number": null,
       "party": "M-E",
       "partyName": "Die Mitte",
       "active": true,
