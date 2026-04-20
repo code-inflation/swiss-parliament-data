@@ -125,8 +125,8 @@
     },
     {
       "id": 18685,
-      "canton": "SZ",
-      "cantonName": "Schwyz",
+      "canton": null,
+      "cantonName": "Goldau",
       "council": "N",
       "faction": "RL",
       "factionName": "FDP-Liberale Fraktion",
@@ -225,8 +225,8 @@
     },
     {
       "id": 21779,
-      "canton": "AG",
-      "cantonName": "Aargau",
+      "canton": null,
+      "cantonName": "Aarau",
       "council": "N",
       "faction": "RL",
       "factionName": "FDP-Liberale Fraktion",

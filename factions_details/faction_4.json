@@ -265,8 +265,8 @@
     },
     {
       "id": 21624,
-      "canton": "BE",
-      "cantonName": "Bern",
+      "canton": null,
+      "cantonName": "Berner Jura",
       "council": "N",
       "faction": "V",
       "factionName": "Fraktion der Schweizerischen Volkspartei",
