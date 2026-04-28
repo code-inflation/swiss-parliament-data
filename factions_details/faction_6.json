@@ -64,26 +64,6 @@
       "factionFunction": 1
     },
     {
-      "id": 21763,
-      "canton": null,
-      "cantonName": "Olten-Gösgen",
-      "council": "N",
-      "faction": "G",
-      "factionName": "Grüne Fraktion",
-      "firstName": "Felix",
-      "lastName": "Wettstein",
-      "number": 3191,
-      "party": "GRÜNE",
-      "partyName": "Die Grünen",
-      "active": true,
-      "code": null,
-      "gender": "m",
-      "officialDenomination": null,
-      "salutationLetter": null,
-      "salutationTitle": null,
-      "factionFunction": 1
-    },
-    {
       "id": 21745,
       "canton": null,
       "cantonName": "Lausanne / Lausanne-Ville",
