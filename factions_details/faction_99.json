@@ -2,7 +2,28 @@
   "id": 99,
   "abbreviation": "FRAKTIONSLOS",
   "code": "FRA_99_",
-  "members": [],
+  "members": [
+    {
+      "id": 21446,
+      "canton": "ZH",
+      "cantonName": "Zürich",
+      "council": "S",
+      "faction": "FRAKTIONSLOS",
+      "factionName": "Fraktionslos",
+      "firstName": "Daniel",
+      "lastName": "Jositsch",
+      "number": 2694,
+      "party": "-",
+      "partyName": "Parteilos",
+      "active": true,
+      "code": null,
+      "gender": "m",
+      "officialDenomination": null,
+      "salutationLetter": null,
+      "salutationTitle": null,
+      "factionFunction": 1
+    }
+  ],
   "name": "Fraktionslos",
   "shortName": "Fraktion FRAKTIONSLOS"
 }

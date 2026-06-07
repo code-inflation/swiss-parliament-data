@@ -564,26 +564,6 @@
       "factionFunction": 1
     },
     {
-      "id": 21446,
-      "canton": "ZH",
-      "cantonName": "Zürich",
-      "council": "S",
-      "faction": "S",
-      "factionName": "Sozialdemokratische Fraktion",
-      "firstName": "Daniel",
-      "lastName": "Jositsch",
-      "number": 2694,
-      "party": "SP",
-      "partyName": "Sozialdemokratische Partei",
-      "active": true,
-      "code": null,
-      "gender": "m",
-      "officialDenomination": null,
-      "salutationLetter": null,
-      "salutationTitle": null,
-      "factionFunction": 1
-    },
-    {
       "id": 19025,
       "canton": "BE",
       "cantonName": "Bern",
