@@ -4,6 +4,26 @@
   "code": "FRA_1_",
   "members": [
     {
+      "id": 20774,
+      "canton": "BS",
+      "cantonName": "Basel-Stadt",
+      "council": null,
+      "faction": "RL",
+      "factionName": "FDP-Liberale Fraktion",
+      "firstName": "Victor Emil",
+      "lastName": "Scherer",
+      "number": null,
+      "party": "FDP-Liberale",
+      "partyName": "FDP.Die Liberalen",
+      "active": true,
+      "code": null,
+      "gender": "m",
+      "officialDenomination": null,
+      "salutationLetter": null,
+      "salutationTitle": null,
+      "factionFunction": 1
+    },
+    {
       "id": 19117,
       "canton": "SH",
       "cantonName": "Schaffhausen",
