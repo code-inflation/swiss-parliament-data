@@ -7,18 +7,48 @@ on:
     - cron: '0 0 * * *' # Run daily at midnight UTC
 
 jobs:
-  scheduled:
+  scrape:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
     - name: Check out this repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: uv sync
+
     - name: Fetch latest data
-      run: |-
-          chmod +x scrape.sh
-          ./scrape.sh
-    - name: Commit and push if it changed
+      run: uv run python -m scraper.main
+
+    - name: Show changes (dry-run)
+      run: |
+        echo "=== Git Status ==="
+        git status
+        echo ""
+        echo "=== Changes to be committed ==="
+        git add -A
+        git diff --cached --stat
+        echo ""
+        if [ -n "$(git diff --cached)" ]; then
+          echo "=== Detailed diff ==="
+          git diff --cached
+        else
+          echo "No changes detected."
+        fi
+
+    - name: Commit and push changes (master only)
+      if: github.ref == 'refs/heads/master'
       run: |-
         git config user.name "Automated"
         git config user.email "actions@users.noreply.github.com"
@@ -26,3 +56,13 @@ jobs:
         timestamp=$(date -u)
         git commit -m "Latest data: ${timestamp}" || exit 0
         git push
+
+    - name: Dry-run notice (non-master branches)
+      if: github.ref != 'refs/heads/master'
+      run: |
+        echo "=================================================="
+        echo "DRY RUN MODE - Not on master branch"
+        echo "Branch: ${{ github.ref }}"
+        echo "Changes were NOT committed or pushed."
+        echo "See the diff above to preview what would change."
+        echo "=================================================="
