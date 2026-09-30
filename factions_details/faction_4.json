@@ -4,6 +4,26 @@
   "code": "FRA_4_",
   "members": [
     {
+      "id": 28051,
+      "canton": "TI",
+      "cantonName": "Tessin",
+      "council": "N",
+      "faction": "V",
+      "factionName": "Fraktion der Schweizerischen Volkspartei",
+      "firstName": "Roberta",
+      "lastName": "Soldati",
+      "number": 18110,
+      "party": "SVP",
+      "partyName": "Schweizerische Volkspartei",
+      "active": true,
+      "code": null,
+      "gender": "f",
+      "officialDenomination": null,
+      "salutationLetter": null,
+      "salutationTitle": null,
+      "factionFunction": 1
+    },
+    {
       "id": 25134,
       "canton": null,
       "cantonName": "Teufen",
