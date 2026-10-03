@@ -841,7 +841,7 @@
       "officialDenomination": null,
       "salutationLetter": null,
       "salutationTitle": null,
-      "factionFunction": 1
+      "factionFunction": 11
     },
     {
       "id": 18693,
@@ -921,7 +921,7 @@
       "officialDenomination": null,
       "salutationLetter": null,
       "salutationTitle": null,
-      "factionFunction": 11
+      "factionFunction": 1
     }
   ],
   "name": "Die Mitte-Fraktion. Die Mitte. EVP.",
