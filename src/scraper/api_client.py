@@ -1,6 +1,8 @@
 """API client for Swiss Parliament data."""
 
+import contextlib
 import logging
+import time
 from typing import Any
 
 import httpx
@@ -59,11 +61,16 @@ class ParliamentAPIClient:
         "Chrome/58.0.3029.110 Safari/537.36"
     )
     LIMIT = 1000
+    # HTTP status codes that are typically transient and worth retrying.
+    # Note: httpx.HTTPTransport(retries=...) only covers connection errors,
+    # so response-level retries are implemented in fetch_with_retries.
+    RETRYABLE_STATUS_CODES = frozenset({429, 500, 502, 503, 504})
 
     def __init__(
         self,
         timeout: float = 30.0,
         max_retries: int = 3,
+        retry_delay: float = 5.0,
         transport: httpx.BaseTransport | None = None,
     ) -> None:
         """Initialize API client.
@@ -71,15 +78,65 @@ class ParliamentAPIClient:
         Args:
             timeout: Request timeout in seconds
             max_retries: Maximum number of retry attempts
+            retry_delay: Base delay in seconds between response-level retries
+                (honors a longer Retry-After header when present)
             transport: Optional custom HTTP transport (mainly for testing)
         """
         self.timeout = timeout
         self.max_retries = max_retries
+        self.retry_delay = retry_delay
         self.client = httpx.Client(
             timeout=timeout,
             headers={"User-Agent": self.USER_AGENT},
             transport=transport or httpx.HTTPTransport(retries=max_retries),
         )
+
+    def fetch_with_retries(self, url: str, params: dict[str, int | str]) -> httpx.Response:
+        """GET a URL, retrying transient HTTP responses.
+
+        Connection-level errors are already retried by the underlying
+        transport; this adds response-level retries for 429/5xx, honoring
+        Retry-After when present.
+
+        Args:
+            url: Absolute URL to fetch
+            params: Query parameters
+
+        Returns:
+            The (final) HTTP response
+
+        Raises:
+            httpx.HTTPError: On connection errors or if the last attempt
+                still returned a retryable error status
+        """
+        last_response: httpx.Response | None = None
+        for attempt in range(self.max_retries + 1):
+            try:
+                response = self.client.get(url, params=params)
+                if response.status_code not in self.RETRYABLE_STATUS_CODES:
+                    return response
+                last_response = response
+            except httpx.HTTPError:
+                if attempt == self.max_retries:
+                    raise
+            if attempt < self.max_retries:
+                delay = self.retry_delay
+                if last_response is not None:
+                    # A server-provided Retry-After knows its own capacity;
+                    # honor it over our default when parseable.
+                    retry_after = last_response.headers.get("Retry-After")
+                    if retry_after is not None:
+                        with contextlib.suppress(ValueError):
+                            delay = float(retry_after)
+                status = last_response.status_code if last_response else "connection error"
+                logger.warning(
+                    f"Transient API response (status {status}) from {url}, "
+                    f"retrying in {delay:g}s (attempt {attempt + 1}/{self.max_retries})"
+                )
+                time.sleep(delay)
+        assert last_response is not None  # the loop only exits here on a response
+        last_response.raise_for_status()
+        raise RuntimeError("unreachable")  # pragma: no cover
 
     def __enter__(self) -> "ParliamentAPIClient":
         """Context manager entry."""
@@ -103,14 +160,15 @@ class ParliamentAPIClient:
         offset = 0
 
         while True:
-            params: dict[str, int | str] = {
-                "type_harmonized_id": 4,
-                "body_key": "CHE",
-                "offset": offset,
-                "limit": self.LIMIT,
-            }
-
-            response = self.client.get(f"{self.BASE_URL}/groups/", params=params)
+            response = self.fetch_with_retries(
+                f"{self.BASE_URL}/groups/",
+                {
+                    "type_harmonized_id": 4,
+                    "body_key": "CHE",
+                    "offset": offset,
+                    "limit": self.LIMIT,
+                },
+            )
             response.raise_for_status()
 
             try:
@@ -146,29 +204,24 @@ class ParliamentAPIClient:
         offset = 0
 
         while True:
-            params: dict[str, int | str] = {
-                "group_id": group_id,
-                "expand": "person",
-                "offset": offset,
-                "limit": self.LIMIT,
-            }
+            response = self.fetch_with_retries(
+                f"{self.BASE_URL}/memberships/",
+                {
+                    "group_id": group_id,
+                    "expand": "person",
+                    "offset": offset,
+                    "limit": self.LIMIT,
+                },
+            )
+            response.raise_for_status()
 
-            try:
-                response = self.client.get(f"{self.BASE_URL}/memberships/", params=params)
-                response.raise_for_status()
+            membership_response = MembershipResponse.model_validate(response.json())
+            memberships.extend(membership_response.data)
 
-                membership_response = MembershipResponse.model_validate(response.json())
-                memberships.extend(membership_response.data)
-
-                if not membership_response.meta.has_more:
-                    break
-
-                offset += self.LIMIT
-
-            except httpx.HTTPError as e:
-                logger.warning(f"Failed to fetch memberships for group {group_id}: {e}")
-                # Continue with what we have rather than failing completely
+            if not membership_response.meta.has_more:
                 break
+
+            offset += self.LIMIT
 
         return memberships
 
@@ -191,9 +244,9 @@ class ParliamentAPIClient:
         try:
             # The group_by endpoint ignores limit/offset and returns all
             # buckets in one page, so a single request suffices.
-            response = self.client.get(
+            response = self.fetch_with_retries(
                 f"{self.BASE_URL}/persons/group_by/electoral_districts",
-                params={"limit": self.LIMIT},
+                {"limit": self.LIMIT},
             )
             response.raise_for_status()
             district_response = DistrictMapResponse.model_validate(response.json())

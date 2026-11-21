@@ -7,6 +7,8 @@ import sys
 from collections.abc import Callable
 from pathlib import Path
 
+import httpx
+
 from scraper.api_client import ParliamentAPIClient
 from scraper.mappings import (
     extract_language_field,
@@ -128,6 +130,16 @@ def scrape_factions(
         }
         logger.info(f"Faction IDs from API: {len(faction_ids)}")
 
+        # Abort before pruning when nothing is usable: deleting all existing
+        # snapshots on an upstream data regression would be committed as a
+        # legitimate-looking data update.
+        if not faction_ids:
+            logger.error(
+                "API returned active groups but none with an external_alternative_id. "
+                "Aborting to prevent data loss."
+            )
+            sys.exit(1)
+
         # Remove old faction files that are no longer in API
         for existing_file in output_dir.glob("faction_*.json"):
             existing_id = existing_file.stem.replace("faction_", "")
@@ -136,6 +148,7 @@ def scrape_factions(
                 existing_file.unlink()
 
         # Process each group
+        failed_factions: list[str] = []
         for group in groups:
             faction_id = group.external_alternative_id
             if not faction_id:
@@ -147,8 +160,19 @@ def scrape_factions(
 
             logger.info(f"Fetching memberships for faction ID: {faction_id} (group ID: {group.id})")
 
-            # Fetch memberships
-            memberships = client.fetch_memberships(group.id)
+            try:
+                memberships = client.fetch_memberships(group.id)
+            except httpx.HTTPError as e:
+                # Do not overwrite the previous snapshot with a truncated
+                # result; keep the old file, continue with other factions,
+                # and let the run exit non-zero so the failure is visible.
+                logger.error(
+                    f"Failed to fetch memberships for faction {faction_id}, "
+                    f"keeping previous snapshot: {e}"
+                )
+                failed_factions.append(faction_id)
+                continue
+
             members = process_memberships(memberships, faction_abbr, faction_name, district_map)
 
             # Create faction object
@@ -172,6 +196,13 @@ def scrape_factions(
                 )
                 f.write("\n")
             logger.info(f"Saved faction {faction_id} to {output_file}")
+
+    if failed_factions:
+        logger.error(
+            f"Finished with {len(failed_factions)} faction(s) not updated: "
+            f"{', '.join(sorted(failed_factions))}"
+        )
+        sys.exit(1)
 
     logger.info("Finished fetching all faction details.")
 

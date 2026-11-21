@@ -11,8 +11,8 @@ from scraper.main import scrape_factions
 
 
 def make_client(handler: Any) -> ParliamentAPIClient:
-    """Create a client backed by a mock transport."""
-    return ParliamentAPIClient(transport=httpx.MockTransport(handler))
+    """Create a client backed by a mock transport (no retry sleep in tests)."""
+    return ParliamentAPIClient(transport=httpx.MockTransport(handler), retry_delay=0)
 
 
 def api_page(data: list[dict[str, Any]], has_more: bool) -> httpx.Response:
@@ -115,6 +115,94 @@ class TestFetchGroups:
         assert seen["body_key"] == "CHE"
 
 
+class TestFetchWithRetries:
+    """Tests for response-level retries (429/5xx)."""
+
+    def test_retries_transient_status_then_succeeds(self) -> None:
+        """A transient 503 on the first attempt is retried, not propagated."""
+        pages = [
+            api_page([membership_payload(1, True)], has_more=True),
+            httpx.Response(503),
+        ]
+        calls: list[int] = []
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            # first call for page 2 gets a 503, the retry succeeds
+            if len(calls) < 2:
+                calls.append(1)
+                return pages[0]
+            if len(calls) < 3:
+                calls.append(1)
+                return httpx.Response(503)
+            calls.append(1)
+            return pages[1]
+
+        def handler2(request: httpx.Request) -> httpx.Response:
+            return handler(request)
+
+        # Simpler: first request 503, second succeeds
+        state = {"n": 0}
+
+        def handler3(request: httpx.Request) -> httpx.Response:
+            state["n"] += 1
+            if state["n"] == 1:
+                return httpx.Response(503)
+            return api_page([membership_payload(1, True)], has_more=False)
+
+        with make_client(handler3) as client:
+            memberships = client.fetch_memberships(1)
+
+        assert len(memberships) == 1
+        assert state["n"] == 2
+
+    def test_gives_up_after_max_retries(self) -> None:
+        """Persistent 503 exhausts retries and raises."""
+        state = {"n": 0}
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            state["n"] += 1
+            return httpx.Response(503)
+
+        client = ParliamentAPIClient(
+            transport=httpx.MockTransport(handler), max_retries=2, retry_delay=0
+        )
+        with client, pytest.raises(httpx.HTTPStatusError):
+            client.fetch_memberships(1)
+        assert state["n"] == 3  # initial + 2 retries
+
+    def test_does_not_retry_non_retryable_status(self) -> None:
+        """A 404 fails immediately without retrying."""
+        state = {"n": 0}
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            state["n"] += 1
+            return httpx.Response(404)
+
+        with make_client(handler) as client, pytest.raises(httpx.HTTPStatusError):
+            client.fetch_memberships(1)
+        assert state["n"] == 1
+
+    def test_honors_retry_after_header(self) -> None:
+        """Retry-After overrides the default delay (parsed, capped at >= base)."""
+        import time as time_mod
+
+        state = {"n": 0}
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            state["n"] += 1
+            if state["n"] == 1:
+                return httpx.Response(429, headers={"Retry-After": "0.2"})
+            return api_page([], has_more=False)
+
+        client = ParliamentAPIClient(transport=httpx.MockTransport(handler), retry_delay=5.0)
+        start = time_mod.monotonic()
+        with client:
+            client.fetch_memberships(1)
+        elapsed = time_mod.monotonic() - start
+        # Retry-After (0.2s) must override the 5s default delay
+        assert elapsed < 2.0
+
+
 class TestFetchMemberships:
     """Tests for fetch_memberships."""
 
@@ -138,20 +226,21 @@ class TestFetchMemberships:
         assert params["group_id"] == "3518"
         assert params["expand"] == "person"
 
-    def test_http_error_returns_partial_data(self) -> None:
-        """Document current behavior: a mid-pagination failure keeps earlier pages."""
+    def test_http_error_propagates(self) -> None:
+        """A mid-pagination failure raises so the caller can preserve the old snapshot."""
         calls: list[int] = []
 
         def handler(request: httpx.Request) -> httpx.Response:
             calls.append(1)
             if len(calls) == 1:
                 return api_page([membership_payload(1, True)], has_more=True)
-            return httpx.Response(500)
+            return httpx.Response(503)
 
-        with make_client(handler) as client:
-            memberships = client.fetch_memberships(1)
+        with make_client(handler) as client, pytest.raises(httpx.HTTPStatusError):
+            client.fetch_memberships(1)
 
-        assert len(memberships) == 1
+        # the failing page was retried max_retries times before giving up
+        assert len(calls) == 5  # page 1, then 503 x4 (initial + 3 retries)
 
 
 class TestFetchDistrictMap:
@@ -223,7 +312,9 @@ class TestClose:
 
     def test_context_manager_closes_on_exit(self) -> None:
         """Test that the context manager closes the client, even on error."""
-        client = ParliamentAPIClient(transport=httpx.MockTransport(lambda r: httpx.Response(500)))
+        client = ParliamentAPIClient(
+            transport=httpx.MockTransport(lambda r: httpx.Response(500)), retry_delay=0
+        )
         with pytest.raises(httpx.HTTPError), client:
             client.fetch_groups()
         with pytest.raises(RuntimeError):
@@ -293,8 +384,8 @@ class TestScrapeFactions:
 
     @staticmethod
     def _client_factory(handler: Any) -> Any:
-        """Build a client factory returning a mock-transport client."""
-        return lambda: ParliamentAPIClient(transport=httpx.MockTransport(handler))
+        """Build a client factory returning a mock-transport client (no retry sleeps)."""
+        return lambda: ParliamentAPIClient(transport=httpx.MockTransport(handler), retry_delay=0)
 
     def test_writes_expected_json_with_trailing_newline(self, tmp_path: Any) -> None:
         """Test the full flow produces byte-compatible JSON files."""
@@ -412,3 +503,78 @@ class TestScrapeFactions:
             scrape_factions(output_dir=tmp_path, client_factory=factory)
 
         assert existing.exists()  # stale files were not removed
+
+    def test_aborts_when_no_usable_faction_ids(self, tmp_path: Any) -> None:
+        """Regression: active groups without external_alternative_id must not
+        trigger deletion of every snapshot."""
+        existing = tmp_path / "faction_5.json"
+        existing.write_text("{}")
+
+        groups = api_page(
+            [
+                {"id": 100, "abbreviation": {"de": "X"}, "name": {"de": "X"}, "active": True},
+            ],
+            has_more=False,
+        )
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            if "group_by" in str(request.url):
+                return httpx.Response(200, json={"data": [], "meta": {"total_records": 0}})
+            if request.url.path.endswith("/groups/"):
+                return groups
+            raise AssertionError("memberships must not be fetched")
+
+        factory = self._client_factory(handler)
+        with pytest.raises(SystemExit):
+            scrape_factions(output_dir=tmp_path, client_factory=factory)
+
+        assert existing.exists()
+
+    def test_membership_failure_preserves_snapshot_and_fails(self, tmp_path: Any) -> None:
+        """Regression: a membership fetch failure must not overwrite the old
+        snapshot with an empty/partial list, must continue other factions,
+        and must exit non-zero."""
+        good = tmp_path / "faction_5.json"
+        good.write_text('{"old": true}')
+
+        groups = api_page(
+            [
+                {
+                    "id": 100,
+                    "external_alternative_id": "5",
+                    "abbreviation": {"de": "V"},
+                    "name": {"de": "V"},
+                    "active": True,
+                },
+                {
+                    "id": 200,
+                    "external_alternative_id": "6",
+                    "abbreviation": {"de": "G"},
+                    "name": {"de": "G"},
+                    "active": True,
+                },
+            ],
+            has_more=False,
+        )
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            if "group_by" in str(request.url):
+                return httpx.Response(200, json={"data": [], "meta": {"total_records": 0}})
+            if request.url.path.endswith("/groups/"):
+                return groups
+            if "group_id=100" in str(request.url):
+                return httpx.Response(503)  # persistent failure for faction 5
+            return api_page(
+                [membership_payload(42, True, role_name={"de": "Mitglied"})],
+                has_more=False,
+            )
+
+        factory = self._client_factory(handler)
+        with pytest.raises(SystemExit) as excinfo:
+            scrape_factions(output_dir=tmp_path, client_factory=factory)
+
+        assert excinfo.value.code == 1
+        # faction 5's snapshot was preserved untouched
+        assert good.read_text() == '{"old": true}'
+        # faction 6 was still scraped and written
+        assert (tmp_path / "faction_6.json").exists()
