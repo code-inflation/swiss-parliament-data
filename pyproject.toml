@@ -23,11 +23,6 @@ dev = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.uv]
-# Disable uv 0.13's default 7-day dependency cooldown so the committed
-# lockfile is authoritative; the nightly cron must never re-resolve on its own.
-exclude-newer = false
-
 [tool.hatch.build.targets.wheel]
 packages = ["src/scraper"]
 
