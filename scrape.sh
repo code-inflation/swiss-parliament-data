@@ -185,7 +185,11 @@ while read -r group; do
                    end),
           party: lang_field($person.party),
           partyName: lang_field($person.party_harmonized),
-          active: ($membership.active // null),
+          # Use explicit null check: "// null" would swallow active == false
+          active: (if $membership.active == null then null else $membership.active end),
+          # Membership validity period, as extracted from the API
+          startDate: ($membership.begin_date // null),
+          endDate: ($membership.end_date // null),
           code: null,
           gender: ($person.gender // null),
           officialDenomination: null,
