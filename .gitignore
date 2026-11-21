@@ -49,4 +49,3 @@ dmypy.json
 
 # UV
 .uv/
-uv.lock
