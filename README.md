@@ -28,7 +28,22 @@ This project uses modern Python tooling:
 Install dependencies with UV:
 
 ```bash
-uv sync
+uv sync --frozen
+```
+
+Dependencies are pinned in `uv.lock` and installed exactly as committed
+(`--frozen` never re-resolves). uv's default 7-day dependency cooldown
+applies whenever resolution happens, so freshly published releases are
+picked up only after they've been out for about a week.
+
+#### Updating dependencies (manual)
+
+Dependency bumps are deliberate, not automatic:
+
+```bash
+uv lock --upgrade          # re-resolve within the 7-day cooldown window
+uv sync --frozen           # or: uv sync (rebuilds .venv from the new lock)
+uv run pytest              # verify, then commit uv.lock
 ```
 
 ### Running the Scraper
@@ -36,7 +51,7 @@ uv sync
 Run the scraper locally:
 
 ```bash
-uv run python -m scraper.main
+uv run --frozen python -m scraper.main
 ```
 
 ### Development Commands
@@ -44,20 +59,20 @@ uv run python -m scraper.main
 Run linting:
 
 ```bash
-uv run ruff check .
-uv run ruff format .
+uv run --frozen ruff check .
+uv run --frozen ruff format .
 ```
 
 Run type checking:
 
 ```bash
-uv run mypy --package scraper
+uv run --frozen mypy --package scraper
 ```
 
 Run tests:
 
 ```bash
-uv run pytest
+uv run --frozen pytest
 ```
 
 ### Project Structure
