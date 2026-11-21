@@ -60,19 +60,25 @@ class ParliamentAPIClient:
     )
     LIMIT = 1000
 
-    def __init__(self, timeout: float = 30.0, max_retries: int = 3) -> None:
+    def __init__(
+        self,
+        timeout: float = 30.0,
+        max_retries: int = 3,
+        transport: httpx.BaseTransport | None = None,
+    ) -> None:
         """Initialize API client.
 
         Args:
             timeout: Request timeout in seconds
             max_retries: Maximum number of retry attempts
+            transport: Optional custom HTTP transport (mainly for testing)
         """
         self.timeout = timeout
         self.max_retries = max_retries
         self.client = httpx.Client(
             timeout=timeout,
             headers={"User-Agent": self.USER_AGENT},
-            transport=httpx.HTTPTransport(retries=max_retries),
+            transport=transport or httpx.HTTPTransport(retries=max_retries),
         )
 
     def __enter__(self) -> "ParliamentAPIClient":

@@ -1,5 +1,7 @@
 """Tests for main scraper logic."""
 
+from typing import Any
+
 from scraper.main import process_memberships
 from scraper.models import MembershipData, PersonData, PersonWrapper
 
@@ -173,3 +175,45 @@ class TestProcessMemberships:
 
         assert members[0].number is None
         assert members[0].id == 6507
+
+
+class TestProcessMembershipsWarnings:
+    """Tests for warning behavior on unresolvable data."""
+
+    def test_unmapped_district_warns_once_per_district(self, caplog: Any) -> None:
+        """Unknown constituency names are collected and warned about."""
+        import logging
+
+        person = PersonData(
+            id=1,
+            lastname="Riniker",
+            electoral_district={"de": "Atlantis"},
+        )
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        with caplog.at_level(logging.WARNING):
+            members = process_memberships([membership], "SVP", "Test", district_map={})
+
+        assert members[0].canton is None
+        assert members[0].cantonName == "Atlantis"
+        warnings = [r.message for r in caplog.records if "Atlantis" in r.message]
+        assert len(warnings) == 1
+        assert "Unmapped electoral district" in warnings[0]
+
+    def test_known_district_does_not_warn(self, caplog: Any) -> None:
+        """Resolvable districts produce no warnings."""
+        import logging
+
+        person = PersonData(id=1, electoral_district={"de": "Aarau"})
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        with caplog.at_level(logging.WARNING):
+            process_memberships([membership], "SVP", "Test", district_map={"Aarau": "AG"})
+
+        assert not [r for r in caplog.records if r.levelno >= logging.WARNING]

@@ -4,6 +4,7 @@ import contextlib
 import json
 import logging
 import sys
+from collections.abc import Callable
 from pathlib import Path
 
 from scraper.api_client import ParliamentAPIClient
@@ -95,15 +96,19 @@ def process_memberships(
     return members
 
 
-def scrape_factions(output_dir: Path = Path("factions_details")) -> None:
+def scrape_factions(
+    output_dir: Path = Path("factions_details"),
+    client_factory: Callable[[], ParliamentAPIClient] | None = None,
+) -> None:
     """Scrape faction data and save to JSON files.
 
     Args:
         output_dir: Directory to save faction JSON files
+        client_factory: Optional factory for the API client (mainly for testing)
     """
     output_dir.mkdir(exist_ok=True)
 
-    with ParliamentAPIClient() as client:
+    with (client_factory or ParliamentAPIClient)() as client:
         # Fetch district → canton map first (needed by process_memberships)
         logger.info("Fetching electoral district → canton map...")
         district_map = client.fetch_district_map()
