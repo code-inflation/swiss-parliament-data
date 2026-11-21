@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Cleanup trap for temp files
 cleanup() {
-  rm -f "$tmp_groups" "$ids_file" 2>/dev/null || true
+  rm -f "$tmp_groups" "$ids_file" "$tmp_members_json" 2>/dev/null || true
 }
 trap cleanup EXIT
 
@@ -45,6 +45,7 @@ fetch_groups() {
 }
 
 tmp_groups=$(mktemp)
+tmp_members_json=$(mktemp)
 fetch_groups > "$tmp_groups"
 
 if [ ! -s "$tmp_groups" ]; then
@@ -110,7 +111,7 @@ while read -r group; do
     offset=$((offset + limit))
   done
 
-  members_json=$(jq -s --arg faction_abbr "$faction_abbr" --arg faction_name "$faction_name" '
+  jq -s --arg faction_abbr "$faction_abbr" --arg faction_name "$faction_name" '
     def lang_field($value):
       if ($value | type) == "object" then
         ($value.de // null)
@@ -174,7 +175,14 @@ while read -r group; do
           factionName: $faction_name,
           firstName: ($person.firstname // null),
           lastName: ($person.lastname // null),
-          number: (if ($person.external_alternative_id // null) == null then null else ($person.external_alternative_id | tonumber) end),
+          # Guard against non-numeric external_alternative_id values in upstream data
+          number: (if ($person.external_alternative_id // null) == null
+                   then null
+                   elif ($person.external_alternative_id | type) == "number" then $person.external_alternative_id
+                   elif (($person.external_alternative_id | type) == "string") and (($person.external_alternative_id | test("^[0-9]+(\\.[0-9]+)?$")))
+                   then ($person.external_alternative_id | tonumber)
+                   else null
+                   end),
           party: lang_field($person.party),
           partyName: lang_field($person.party_harmonized),
           active: ($membership.active // null),
@@ -185,23 +193,26 @@ while read -r group; do
           salutationTitle: null,
           factionFunction: faction_function(lang_field($membership.role_name))
         }
-    )' "$tmp_memberships")
+    )' "$tmp_memberships" > "$tmp_members_json"
 
-  rm -f "$tmp_memberships"
-
+  # Use a file + --slurpfile instead of --argjson to avoid hitting ARG_MAX
+  # ("Argument list too long") on large factions
   jq -n \
     --arg faction_id "$faction_id" \
     --arg faction_abbr "$faction_abbr" \
     --arg faction_name "$faction_name" \
-    --argjson members "$members_json" \
+    --slurpfile members "$tmp_members_json" \
     '{
       id: ($faction_id | tonumber),
       abbreviation: $faction_abbr,
       code: ("FRA_" + $faction_id + "_"),
-      members: $members,
+      members: $members[0],
       name: $faction_name,
       shortName: ("Fraktion " + $faction_abbr)
     }' > "$output_dir/faction_$faction_id.json"
+
+  rm -f "$tmp_members_json"
+  rm -f "$tmp_memberships"
 done < "$tmp_groups"
 
 rm -f "$tmp_groups" "$ids_file"
