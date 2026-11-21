@@ -753,7 +753,7 @@
     },
     {
       "id": 21763,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Olten-Gösgen",
       "council": null,
       "faction": "G",
@@ -775,7 +775,7 @@
     },
     {
       "id": 21763,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Olten-Gösgen",
       "council": null,
       "faction": "G",
@@ -929,7 +929,7 @@
     },
     {
       "id": 21745,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Lausanne-Ville",
       "council": "N",
       "faction": "G",
@@ -951,7 +951,7 @@
     },
     {
       "id": 21745,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Lausanne-Ville",
       "council": "N",
       "faction": "G",
@@ -1127,7 +1127,7 @@
     },
     {
       "id": 21717,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sion",
       "council": "N",
       "faction": "G",
@@ -1215,7 +1215,7 @@
     },
     {
       "id": 21707,
-      "canton": null,
+      "canton": "GL",
       "cantonName": "Glarus Süd",
       "council": "S",
       "faction": "G",
@@ -1457,7 +1457,7 @@
     },
     {
       "id": 17184,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Baden",
       "council": null,
       "faction": "G",
@@ -1523,7 +1523,7 @@
     },
     {
       "id": 7182,
-      "canton": null,
+      "canton": "BE",
       "cantonName": "Oberland",
       "council": null,
       "faction": "G",
@@ -1545,7 +1545,7 @@
     },
     {
       "id": 7182,
-      "canton": null,
+      "canton": "BE",
       "cantonName": "Oberland",
       "council": null,
       "faction": "G",
@@ -2007,7 +2007,7 @@
     },
     {
       "id": 21481,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lavaux - Oron",
       "council": null,
       "faction": "G",
@@ -2029,7 +2029,7 @@
     },
     {
       "id": 21481,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lavaux - Oron",
       "council": null,
       "faction": "G",
@@ -2117,7 +2117,7 @@
     },
     {
       "id": 12589,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Solothurn-Lebern",
       "council": null,
       "faction": "G",
@@ -2139,7 +2139,7 @@
     },
     {
       "id": 12589,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Solothurn-Lebern",
       "council": null,
       "faction": "G",
@@ -2293,7 +2293,7 @@
     },
     {
       "id": 8020,
-      "canton": null,
+      "canton": "BS",
       "cantonName": "Grossbasel West",
       "council": null,
       "faction": "G",
@@ -2491,7 +2491,7 @@
     },
     {
       "id": 21436,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Wil",
       "council": null,
       "faction": "G",
@@ -2513,7 +2513,7 @@
     },
     {
       "id": 21436,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Wil",
       "council": null,
       "faction": "G",
@@ -3041,7 +3041,7 @@
     },
     {
       "id": 12486,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Solothurn-Lebern",
       "council": null,
       "faction": "G",
@@ -3107,7 +3107,7 @@
     },
     {
       "id": 18871,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "See-Gaster",
       "council": null,
       "faction": "G",
@@ -3899,7 +3899,7 @@
     },
     {
       "id": 12417,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Dorneck-Thierstein",
       "council": null,
       "faction": "G",
@@ -3965,7 +3965,7 @@
     },
     {
       "id": 25098,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Solothurn-Lebern",
       "council": "N",
       "faction": "G",
@@ -4053,7 +4053,7 @@
     },
     {
       "id": 21745,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Lausanne-Ville",
       "council": "N",
       "faction": "G",
@@ -4295,7 +4295,7 @@
     },
     {
       "id": 21717,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sion",
       "council": "N",
       "faction": "G",
@@ -4383,7 +4383,7 @@
     },
     {
       "id": 21707,
-      "canton": null,
+      "canton": "GL",
       "cantonName": "Glarus Süd",
       "council": "S",
       "faction": "G",

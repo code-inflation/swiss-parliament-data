@@ -3283,7 +3283,7 @@
     },
     {
       "id": 21696,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Rheintal",
       "council": "N",
       "faction": "V",
@@ -3305,7 +3305,7 @@
     },
     {
       "id": 21696,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Rheintal",
       "council": "N",
       "faction": "V",
@@ -3371,7 +3371,7 @@
     },
     {
       "id": 21646,
-      "canton": null,
+      "canton": "AR",
       "cantonName": "Herisau",
       "council": null,
       "faction": "V",
@@ -3393,7 +3393,7 @@
     },
     {
       "id": 21646,
-      "canton": null,
+      "canton": "AR",
       "cantonName": "Herisau",
       "council": null,
       "faction": "V",
@@ -3415,7 +3415,7 @@
     },
     {
       "id": 21646,
-      "canton": null,
+      "canton": "AR",
       "cantonName": "Herisau",
       "council": null,
       "faction": "V",
@@ -3723,7 +3723,7 @@
     },
     {
       "id": 9690,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Brig",
       "council": null,
       "faction": "V",
@@ -3745,7 +3745,7 @@
     },
     {
       "id": 9690,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Brig",
       "council": null,
       "faction": "V",
@@ -3987,7 +3987,7 @@
     },
     {
       "id": 21631,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Dorneck-Thierstein",
       "council": "N",
       "faction": "V",
@@ -4009,7 +4009,7 @@
     },
     {
       "id": 21631,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Dorneck-Thierstein",
       "council": "N",
       "faction": "V",
@@ -4075,7 +4075,7 @@
     },
     {
       "id": 21629,
-      "canton": null,
+      "canton": "LU",
       "cantonName": "Sursee",
       "council": "N",
       "faction": "V",
@@ -4097,7 +4097,7 @@
     },
     {
       "id": 21629,
-      "canton": null,
+      "canton": "LU",
       "cantonName": "Sursee",
       "council": "N",
       "faction": "V",
@@ -4295,7 +4295,7 @@
     },
     {
       "id": 21625,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Zofingen",
       "council": "N",
       "faction": "V",
@@ -4317,7 +4317,7 @@
     },
     {
       "id": 21625,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Zofingen",
       "council": "N",
       "faction": "V",
@@ -4339,7 +4339,7 @@
     },
     {
       "id": 21624,
-      "canton": null,
+      "canton": "BE",
       "cantonName": "Berner Jura",
       "council": "N",
       "faction": "V",
@@ -4361,7 +4361,7 @@
     },
     {
       "id": 21624,
-      "canton": null,
+      "canton": "BE",
       "cantonName": "Berner Jura",
       "council": "N",
       "faction": "V",
@@ -4383,7 +4383,7 @@
     },
     {
       "id": 21623,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Ouest lausannois",
       "council": "N",
       "faction": "V",
@@ -4405,7 +4405,7 @@
     },
     {
       "id": 21623,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Ouest lausannois",
       "council": "N",
       "faction": "V",
@@ -4427,7 +4427,7 @@
     },
     {
       "id": 21622,
-      "canton": null,
+      "canton": "UR",
       "cantonName": "Schattdorf",
       "council": null,
       "faction": "V",
@@ -4757,7 +4757,7 @@
     },
     {
       "id": 21593,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "X Meilen",
       "council": "N",
       "faction": "V",
@@ -4779,7 +4779,7 @@
     },
     {
       "id": 21593,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "X Meilen",
       "council": "N",
       "faction": "V",
@@ -4801,7 +4801,7 @@
     },
     {
       "id": 21593,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "X Meilen",
       "council": "N",
       "faction": "V",
@@ -6363,7 +6363,7 @@
     },
     {
       "id": 18247,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "XIV Winterthur Stadt",
       "council": null,
       "faction": "V",
@@ -6385,7 +6385,7 @@
     },
     {
       "id": 18247,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "XIV Winterthur Stadt",
       "council": null,
       "faction": "V",
@@ -6407,7 +6407,7 @@
     },
     {
       "id": 18247,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "XIV Winterthur Stadt",
       "council": null,
       "faction": "V",
@@ -6429,7 +6429,7 @@
     },
     {
       "id": 18247,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "XIV Winterthur Stadt",
       "council": null,
       "faction": "V",
@@ -6451,7 +6451,7 @@
     },
     {
       "id": 21459,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Wil",
       "council": "N",
       "faction": "V",
@@ -6473,7 +6473,7 @@
     },
     {
       "id": 21459,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Wil",
       "council": "N",
       "faction": "V",
@@ -6495,7 +6495,7 @@
     },
     {
       "id": 21459,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Wil",
       "council": "N",
       "faction": "V",
@@ -6517,7 +6517,7 @@
     },
     {
       "id": 21459,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Wil",
       "council": "N",
       "faction": "V",
@@ -7001,7 +7001,7 @@
     },
     {
       "id": 21438,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Jura - Nord Vaudois / Yverdon",
       "council": null,
       "faction": "V",
@@ -7023,7 +7023,7 @@
     },
     {
       "id": 21438,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Jura - Nord Vaudois / Yverdon",
       "council": null,
       "faction": "V",
@@ -9487,7 +9487,7 @@
     },
     {
       "id": 20420,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "VIII Affoltern",
       "council": null,
       "faction": "V",
@@ -9509,7 +9509,7 @@
     },
     {
       "id": 20420,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "VIII Affoltern",
       "council": null,
       "faction": "V",
@@ -9531,7 +9531,7 @@
     },
     {
       "id": 20420,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "VIII Affoltern",
       "council": null,
       "faction": "V",
@@ -9553,7 +9553,7 @@
     },
     {
       "id": 20420,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "VIII Affoltern",
       "council": null,
       "faction": "V",
@@ -9575,7 +9575,7 @@
     },
     {
       "id": 20420,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "VIII Affoltern",
       "council": null,
       "faction": "V",
@@ -9597,7 +9597,7 @@
     },
     {
       "id": 20420,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "VIII Affoltern",
       "council": null,
       "faction": "V",
@@ -14019,7 +14019,7 @@
     },
     {
       "id": 21785,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Brig",
       "council": "N",
       "faction": "V",
@@ -15031,7 +15031,7 @@
     },
     {
       "id": 18727,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Sarganserland",
       "council": "N",
       "faction": "V",
@@ -15075,7 +15075,7 @@
     },
     {
       "id": 18725,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Bucheggberg-Wasseramt",
       "council": "N",
       "faction": "V",
@@ -15097,7 +15097,7 @@
     },
     {
       "id": 18724,
-      "canton": null,
+      "canton": "SZ",
       "cantonName": "Goldau",
       "council": "N",
       "faction": "V",
@@ -15141,7 +15141,7 @@
     },
     {
       "id": 18721,
-      "canton": null,
+      "canton": "TG",
       "cantonName": "Weinfelden",
       "council": "N",
       "faction": "V",
@@ -15449,7 +15449,7 @@
     },
     {
       "id": 25134,
-      "canton": null,
+      "canton": "AR",
       "cantonName": "Teufen",
       "council": "N",
       "faction": "V",
@@ -15493,7 +15493,7 @@
     },
     {
       "id": 21631,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Dorneck-Thierstein",
       "council": "N",
       "faction": "V",
@@ -15537,7 +15537,7 @@
     },
     {
       "id": 21629,
-      "canton": null,
+      "canton": "LU",
       "cantonName": "Sursee",
       "council": "N",
       "faction": "V",
@@ -15625,7 +15625,7 @@
     },
     {
       "id": 21625,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Zofingen",
       "council": "N",
       "faction": "V",
@@ -15691,7 +15691,7 @@
     },
     {
       "id": 18727,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Sarganserland",
       "council": "N",
       "faction": "V",
@@ -15735,7 +15735,7 @@
     },
     {
       "id": 21624,
-      "canton": null,
+      "canton": "BE",
       "cantonName": "Berner Jura",
       "council": "N",
       "faction": "V",
@@ -15889,7 +15889,7 @@
     },
     {
       "id": 21785,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Brig",
       "council": "N",
       "faction": "V",
@@ -16109,7 +16109,7 @@
     },
     {
       "id": 21593,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "X Meilen",
       "council": "N",
       "faction": "V",
@@ -16219,7 +16219,7 @@
     },
     {
       "id": 21623,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Ouest lausannois",
       "council": "N",
       "faction": "V",
@@ -16285,7 +16285,7 @@
     },
     {
       "id": 21459,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Wil",
       "council": "N",
       "faction": "V",
@@ -16373,7 +16373,7 @@
     },
     {
       "id": 18725,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Bucheggberg-Wasseramt",
       "council": "N",
       "faction": "V",
@@ -16395,7 +16395,7 @@
     },
     {
       "id": 18724,
-      "canton": null,
+      "canton": "SZ",
       "cantonName": "Goldau",
       "council": "N",
       "faction": "V",
@@ -16835,7 +16835,7 @@
     },
     {
       "id": 21696,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "Rheintal",
       "council": "N",
       "faction": "V",
@@ -16989,7 +16989,7 @@
     },
     {
       "id": 18721,
-      "canton": null,
+      "canton": "TG",
       "cantonName": "Weinfelden",
       "council": "N",
       "faction": "V",

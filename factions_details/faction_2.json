@@ -2931,7 +2931,7 @@
     },
     {
       "id": 21787,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sierre",
       "council": "N",
       "faction": "S",
@@ -2975,7 +2975,7 @@
     },
     {
       "id": 8143,
-      "canton": null,
+      "canton": "BS",
       "cantonName": "Kleinbasel",
       "council": null,
       "faction": "S",
@@ -2997,7 +2997,7 @@
     },
     {
       "id": 21766,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "III Zürich 4+5",
       "council": null,
       "faction": "S",
@@ -3019,7 +3019,7 @@
     },
     {
       "id": 21766,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "III Zürich 4+5",
       "council": null,
       "faction": "S",
@@ -3085,7 +3085,7 @@
     },
     {
       "id": 21746,
-      "canton": null,
+      "canton": "GR",
       "cantonName": "Chur",
       "council": "N",
       "faction": "S",
@@ -3107,7 +3107,7 @@
     },
     {
       "id": 21737,
-      "canton": null,
+      "canton": "GR",
       "cantonName": "Chur",
       "council": null,
       "faction": "S",
@@ -3371,7 +3371,7 @@
     },
     {
       "id": 21634,
-      "canton": null,
+      "canton": "BE",
       "cantonName": "Oberaargau",
       "council": null,
       "faction": "S",
@@ -3481,7 +3481,7 @@
     },
     {
       "id": 21686,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Romanel",
       "council": "N",
       "faction": "S",
@@ -3503,7 +3503,7 @@
     },
     {
       "id": 21686,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Romanel",
       "council": "N",
       "faction": "S",
@@ -3525,7 +3525,7 @@
     },
     {
       "id": 21681,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Lausanne-Ville",
       "council": "N",
       "faction": "S",
@@ -3547,7 +3547,7 @@
     },
     {
       "id": 21681,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Lausanne-Ville",
       "council": "N",
       "faction": "S",
@@ -3569,7 +3569,7 @@
     },
     {
       "id": 21681,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Lausanne-Ville",
       "council": "N",
       "faction": "S",
@@ -4427,7 +4427,7 @@
     },
     {
       "id": 21583,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lavaux - Oron",
       "council": null,
       "faction": "S",
@@ -4449,7 +4449,7 @@
     },
     {
       "id": 21583,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lavaux - Oron",
       "council": null,
       "faction": "S",
@@ -4603,7 +4603,7 @@
     },
     {
       "id": 21576,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Ville",
       "council": null,
       "faction": "S",
@@ -4625,7 +4625,7 @@
     },
     {
       "id": 21576,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Ville",
       "council": null,
       "faction": "S",
@@ -4713,7 +4713,7 @@
     },
     {
       "id": 9912,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sion",
       "council": null,
       "faction": "S",
@@ -4735,7 +4735,7 @@
     },
     {
       "id": 9912,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sion",
       "council": null,
       "faction": "S",
@@ -4757,7 +4757,7 @@
     },
     {
       "id": 9912,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sion",
       "council": null,
       "faction": "S",
@@ -4801,7 +4801,7 @@
     },
     {
       "id": 21545,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Bucheggberg-Wasseramt",
       "council": null,
       "faction": "S",
@@ -4823,7 +4823,7 @@
     },
     {
       "id": 21545,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Bucheggberg-Wasseramt",
       "council": null,
       "faction": "S",
@@ -5593,7 +5593,7 @@
     },
     {
       "id": 8084,
-      "canton": null,
+      "canton": "BS",
       "cantonName": "Kleinbasel",
       "council": null,
       "faction": "S",
@@ -5681,7 +5681,7 @@
     },
     {
       "id": 21495,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Baden",
       "council": null,
       "faction": "S",
@@ -5703,7 +5703,7 @@
     },
     {
       "id": 21495,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Baden",
       "council": null,
       "faction": "S",
@@ -5747,7 +5747,7 @@
     },
     {
       "id": 21488,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Visp",
       "council": null,
       "faction": "S",
@@ -5901,7 +5901,7 @@
     },
     {
       "id": 21485,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Lausanne-Ville",
       "council": null,
       "faction": "S",
@@ -5923,7 +5923,7 @@
     },
     {
       "id": 218,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne",
       "council": null,
       "faction": "S",
@@ -5945,7 +5945,7 @@
     },
     {
       "id": 218,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne",
       "council": null,
       "faction": "S",
@@ -5967,7 +5967,7 @@
     },
     {
       "id": 218,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne",
       "council": null,
       "faction": "S",
@@ -5989,7 +5989,7 @@
     },
     {
       "id": 218,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne",
       "council": null,
       "faction": "S",
@@ -6517,7 +6517,7 @@
     },
     {
       "id": 12196,
-      "canton": null,
+      "canton": "FR",
       "cantonName": "Stadt Freiburg",
       "council": null,
       "faction": "S",
@@ -6539,7 +6539,7 @@
     },
     {
       "id": 12196,
-      "canton": null,
+      "canton": "FR",
       "cantonName": "Stadt Freiburg",
       "council": null,
       "faction": "S",
@@ -6561,7 +6561,7 @@
     },
     {
       "id": 12196,
-      "canton": null,
+      "canton": "FR",
       "cantonName": "Stadt Freiburg",
       "council": null,
       "faction": "S",
@@ -6583,7 +6583,7 @@
     },
     {
       "id": 12196,
-      "canton": null,
+      "canton": "FR",
       "cantonName": "Stadt Freiburg",
       "council": null,
       "faction": "S",
@@ -6605,7 +6605,7 @@
     },
     {
       "id": 21419,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "La Vallée",
       "council": null,
       "faction": "S",
@@ -6627,7 +6627,7 @@
     },
     {
       "id": 21419,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "La Vallée",
       "council": null,
       "faction": "S",
@@ -6649,7 +6649,7 @@
     },
     {
       "id": 21419,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "La Vallée",
       "council": null,
       "faction": "S",
@@ -8409,7 +8409,7 @@
     },
     {
       "id": 21083,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "IX Horgen",
       "council": null,
       "faction": "S",
@@ -8431,7 +8431,7 @@
     },
     {
       "id": 21083,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "IX Horgen",
       "council": null,
       "faction": "S",
@@ -19497,7 +19497,7 @@
     },
     {
       "id": 21681,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Lausanne-Ville",
       "council": "N",
       "faction": "S",
@@ -19585,7 +19585,7 @@
     },
     {
       "id": 21787,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sierre",
       "council": "N",
       "faction": "S",
@@ -19673,7 +19673,7 @@
     },
     {
       "id": 21746,
-      "canton": null,
+      "canton": "GR",
       "cantonName": "Chur",
       "council": "N",
       "faction": "S",
@@ -20113,7 +20113,7 @@
     },
     {
       "id": 21686,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Romanel",
       "council": "N",
       "faction": "S",
@@ -20157,7 +20157,7 @@
     },
     {
       "id": 18706,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Lausanne / Lausanne-Ville",
       "council": "N",
       "faction": "S",
@@ -20179,7 +20179,7 @@
     },
     {
       "id": 18705,
-      "canton": null,
+      "canton": "TG",
       "cantonName": "Kreuzlingen",
       "council": "N",
       "faction": "S",
@@ -20289,7 +20289,7 @@
     },
     {
       "id": 18700,
-      "canton": null,
+      "canton": "LU",
       "cantonName": "Luzern-Stadt",
       "council": "N",
       "faction": "S",

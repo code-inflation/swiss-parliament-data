@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Cleanup trap for temp files
 cleanup() {
-  rm -f "$tmp_groups" "$ids_file" "$tmp_members_json" 2>/dev/null || true
+  rm -f "$tmp_groups" "$ids_file" "$tmp_members_json" "$tmp_district_map" "${tmp_district_map}.json" 2>/dev/null || true
 }
 trap cleanup EXIT
 
@@ -46,6 +46,41 @@ fetch_groups() {
 
 tmp_groups=$(mktemp)
 tmp_members_json=$(mktemp)
+tmp_district_map=$(mktemp)
+
+echo "Fetching electoral district → canton map..."
+district_offset=0
+while true; do
+  if response=$(curl -sf --retry 3 --retry-delay 5 -H "User-Agent: $user_agent" \
+    "$base_url/persons/group_by/electoral_districts?offset=$district_offset&limit=1000"); then
+    echo "$response" | jq -r '
+      .data[]
+      | select(.electoral_district.de != null and .electoral_district.de != "")
+      | [.electoral_district.de,
+         ([.body_keys[] | select(. == "AG" or . == "AI" or . == "AR" or . == "BE" or . == "BL" or . == "BS"
+            or . == "FR" or . == "GE" or . == "GL" or . == "GR" or . == "JU" or . == "LU"
+            or . == "NE" or . == "NW" or . == "OW" or . == "SG" or . == "SH" or . == "SO"
+            or . == "SZ" or . == "TG" or . == "TI" or . == "UR" or . == "VD" or . == "VS"
+            or . == "ZG" or . == "ZH")]
+         | unique
+         | if length == 1 then .[0] else "" end)]
+      | @tsv'
+  else
+    echo "WARNING: could not fetch electoral district map, falling back to static canton names only" >&2
+    break
+  fi
+  has_more=$(echo "$response" | jq -r '.meta.has_more')
+  [ "$has_more" = "true" ] || break
+  district_offset=$((district_offset + 1000))
+done > "$tmp_district_map"
+
+# Merge TSV lines into one JSON object, ignoring empty values when a real one exists
+jq -Rn '
+  [inputs | select(length > 0) | select(. | test("\t")) | split("\t") | {key: .[0], val: .[1]}]
+  | group_by(.key)
+  | map({(.[0].key): ([.[].val | select(. != "")] | unique | .[0] // null)})
+  | add // {}' "$tmp_district_map" > "${tmp_district_map}.json"
+
 fetch_groups > "$tmp_groups"
 
 if [ ! -s "$tmp_groups" ]; then
@@ -111,7 +146,9 @@ while read -r group; do
     offset=$((offset + limit))
   done
 
-  jq -s --arg faction_abbr "$faction_abbr" --arg faction_name "$faction_name" '
+  jq -s --arg faction_abbr "$faction_abbr" --arg faction_name "$faction_name" --slurpfile district_map "${tmp_district_map}.json" '
+    # District → canton lookup map from the API (empty object if fetch failed)
+    ($district_map[0] // {}) as $district_map |
     def lang_field($value):
       if ($value | type) == "object" then
         ($value.de // null)
@@ -119,8 +156,11 @@ while read -r group; do
         $value
       end;
 
+    # District → canton: dynamic API-derived map first, then static canton-name fallback.
+    # $district_map is a {"<district name>": "<canton code>"} object (or {} when unavailable).
     def canton_code($name):
       if $name == null then null
+      elif ($district_map[$name] // null) != null then $district_map[$name]
       elif $name == "Aargau" then "AG"
       elif $name == "Appenzell A.-Rh." or $name == "Appenzell Ausserrhoden" then "AR"
       elif $name == "Appenzell I.-Rh." or $name == "Appenzell Innerrhoden" then "AI"
@@ -132,6 +172,7 @@ while read -r group; do
       elif $name == "Glarus" then "GL"
       elif $name == "Graubünden" then "GR"
       elif $name == "Jura" then "JU"
+      elif $name == "La Vallée" then "VD"
       elif $name == "Luzern" then "LU"
       elif $name == "Neuenburg" then "NE"
       elif $name == "Nidwalden" then "NW"

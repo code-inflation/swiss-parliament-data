@@ -3327,7 +3327,7 @@
     },
     {
       "id": 21779,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Aarau",
       "council": "N",
       "faction": "RL",
@@ -3745,7 +3745,7 @@
     },
     {
       "id": 21661,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Riviera - PdE / Vevey",
       "council": "N",
       "faction": "RL",
@@ -3767,7 +3767,7 @@
     },
     {
       "id": 21661,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Riviera - PdE / Vevey",
       "council": "N",
       "faction": "RL",
@@ -3789,7 +3789,7 @@
     },
     {
       "id": 21660,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Monthey",
       "council": "N",
       "faction": "RL",
@@ -3811,7 +3811,7 @@
     },
     {
       "id": 21660,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Monthey",
       "council": "N",
       "faction": "RL",
@@ -4405,7 +4405,7 @@
     },
     {
       "id": 21606,
-      "canton": null,
+      "canton": "GL",
       "cantonName": "Glarus Süd",
       "council": null,
       "faction": "RL",
@@ -4427,7 +4427,7 @@
     },
     {
       "id": 21606,
-      "canton": null,
+      "canton": "GL",
       "cantonName": "Glarus Süd",
       "council": null,
       "faction": "RL",
@@ -4449,7 +4449,7 @@
     },
     {
       "id": 21606,
-      "canton": null,
+      "canton": "GL",
       "cantonName": "Glarus Süd",
       "council": null,
       "faction": "RL",
@@ -4889,7 +4889,7 @@
     },
     {
       "id": 21546,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Nyon",
       "council": "N",
       "faction": "RL",
@@ -4911,7 +4911,7 @@
     },
     {
       "id": 21546,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Nyon",
       "council": "N",
       "faction": "RL",
@@ -4933,7 +4933,7 @@
     },
     {
       "id": 21546,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Nyon",
       "council": "N",
       "faction": "RL",
@@ -34017,7 +34017,7 @@
     },
     {
       "id": 8057,
-      "canton": null,
+      "canton": "BS",
       "cantonName": "Kleinbasel",
       "council": null,
       "faction": "RL",
@@ -36173,7 +36173,7 @@
     },
     {
       "id": 21661,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Riviera - PdE / Vevey",
       "council": "N",
       "faction": "RL",
@@ -36195,7 +36195,7 @@
     },
     {
       "id": 21660,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Monthey",
       "council": "N",
       "faction": "RL",
@@ -36283,7 +36283,7 @@
     },
     {
       "id": 18685,
-      "canton": null,
+      "canton": "SZ",
       "cantonName": "Goldau",
       "council": "N",
       "faction": "RL",
@@ -36393,7 +36393,7 @@
     },
     {
       "id": 21779,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Aarau",
       "council": "N",
       "faction": "RL",
@@ -36811,7 +36811,7 @@
     },
     {
       "id": 21546,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Nyon",
       "council": "N",
       "faction": "RL",

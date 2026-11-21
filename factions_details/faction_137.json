@@ -93,7 +93,7 @@
     },
     {
       "id": 14194,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Riviera - PdE / Vevey",
       "council": null,
       "faction": "GL",
@@ -181,7 +181,7 @@
     },
     {
       "id": 6267,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "XVII Bülach",
       "council": null,
       "faction": "GL",
@@ -335,7 +335,7 @@
     },
     {
       "id": 1408,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "XII Uster",
       "council": null,
       "faction": "GL",
@@ -357,7 +357,7 @@
     },
     {
       "id": 21577,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Morges",
       "council": null,
       "faction": "GL",
@@ -379,7 +379,7 @@
     },
     {
       "id": 21577,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Morges",
       "council": null,
       "faction": "GL",
@@ -401,7 +401,7 @@
     },
     {
       "id": 21577,
-      "canton": null,
+      "canton": "VD",
       "cantonName": "Morges",
       "council": null,
       "faction": "GL",
@@ -511,7 +511,7 @@
     },
     {
       "id": 21558,
-      "canton": null,
+      "canton": "LU",
       "cantonName": "Luzern-Land",
       "council": null,
       "faction": "GL",
@@ -533,7 +533,7 @@
     },
     {
       "id": 21558,
-      "canton": null,
+      "canton": "LU",
       "cantonName": "Luzern-Land",
       "council": null,
       "faction": "GL",
@@ -775,7 +775,7 @@
     },
     {
       "id": 21482,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "IX Horgen",
       "council": null,
       "faction": "GL",
@@ -797,7 +797,7 @@
     },
     {
       "id": 21482,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "IX Horgen",
       "council": null,
       "faction": "GL",

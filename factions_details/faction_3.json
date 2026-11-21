@@ -2007,7 +2007,7 @@
     },
     {
       "id": 21918,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sierre",
       "council": null,
       "faction": "M-E",
@@ -3503,7 +3503,7 @@
     },
     {
       "id": 21812,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Leuk",
       "council": null,
       "faction": "M-E",
@@ -3525,7 +3525,7 @@
     },
     {
       "id": 21812,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Leuk",
       "council": null,
       "faction": "M-E",
@@ -3547,7 +3547,7 @@
     },
     {
       "id": 21812,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Leuk",
       "council": null,
       "faction": "M-E",
@@ -3569,7 +3569,7 @@
     },
     {
       "id": 21812,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Leuk",
       "council": null,
       "faction": "M-E",
@@ -3855,7 +3855,7 @@
     },
     {
       "id": 7157,
-      "canton": null,
+      "canton": "BE",
       "cantonName": "Thun",
       "council": "N",
       "faction": "M-E",
@@ -4009,7 +4009,7 @@
     },
     {
       "id": 21759,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Baden",
       "council": null,
       "faction": "M-E",
@@ -4119,7 +4119,7 @@
     },
     {
       "id": 21735,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sierre",
       "council": "N",
       "faction": "M-E",
@@ -4229,7 +4229,7 @@
     },
     {
       "id": 21712,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Baden",
       "council": "S",
       "faction": "M-E",
@@ -4339,7 +4339,7 @@
     },
     {
       "id": 21698,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Brig",
       "council": "N",
       "faction": "M-E",
@@ -4361,7 +4361,7 @@
     },
     {
       "id": 21698,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Brig",
       "council": "N",
       "faction": "M-E",
@@ -4383,7 +4383,7 @@
     },
     {
       "id": 21698,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Brig",
       "council": "N",
       "faction": "M-E",
@@ -4735,7 +4735,7 @@
     },
     {
       "id": 16948,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Westlich Raron",
       "council": "S",
       "faction": "M-E",
@@ -4757,7 +4757,7 @@
     },
     {
       "id": 16948,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Westlich Raron",
       "council": "S",
       "faction": "M-E",
@@ -4977,7 +4977,7 @@
     },
     {
       "id": 21613,
-      "canton": null,
+      "canton": "BE",
       "cantonName": "Biel-Seeland",
       "council": null,
       "faction": "M-E",
@@ -5043,7 +5043,7 @@
     },
     {
       "id": 12532,
-      "canton": null,
+      "canton": "SO",
       "cantonName": "Bucheggberg-Wasseramt",
       "council": null,
       "faction": "M-E",
@@ -6363,7 +6363,7 @@
     },
     {
       "id": 21504,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sion",
       "council": null,
       "faction": "M-E",
@@ -6385,7 +6385,7 @@
     },
     {
       "id": 21496,
-      "canton": null,
+      "canton": "GL",
       "cantonName": "Glarus Nord",
       "council": null,
       "faction": "M-E",
@@ -6429,7 +6429,7 @@
     },
     {
       "id": 21482,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "IX Horgen",
       "council": null,
       "faction": "M-E",
@@ -24843,7 +24843,7 @@
     },
     {
       "id": 17728,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "XVIII Dielsdorf",
       "council": null,
       "faction": "M-E",
@@ -24865,7 +24865,7 @@
     },
     {
       "id": 17728,
-      "canton": null,
+      "canton": "ZH",
       "cantonName": "XVIII Dielsdorf",
       "council": null,
       "faction": "M-E",
@@ -25371,7 +25371,7 @@
     },
     {
       "id": 18848,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Visp",
       "council": null,
       "faction": "M-E",
@@ -26801,7 +26801,7 @@
     },
     {
       "id": 18735,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "See-Gaster",
       "council": null,
       "faction": "M-E",
@@ -26823,7 +26823,7 @@
     },
     {
       "id": 18735,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "See-Gaster",
       "council": null,
       "faction": "M-E",
@@ -26845,7 +26845,7 @@
     },
     {
       "id": 18735,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "See-Gaster",
       "council": null,
       "faction": "M-E",
@@ -26867,7 +26867,7 @@
     },
     {
       "id": 18735,
-      "canton": null,
+      "canton": "SG",
       "cantonName": "See-Gaster",
       "council": null,
       "faction": "M-E",
@@ -26911,7 +26911,7 @@
     },
     {
       "id": 18694,
-      "canton": null,
+      "canton": "SZ",
       "cantonName": "Ibach",
       "council": "N",
       "faction": "M-E",
@@ -27285,7 +27285,7 @@
     },
     {
       "id": 7157,
-      "canton": null,
+      "canton": "BE",
       "cantonName": "Thun",
       "council": "N",
       "faction": "M-E",
@@ -27461,7 +27461,7 @@
     },
     {
       "id": 21735,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Sierre",
       "council": "N",
       "faction": "M-E",
@@ -27483,7 +27483,7 @@
     },
     {
       "id": 21712,
-      "canton": null,
+      "canton": "AG",
       "cantonName": "Baden",
       "council": "S",
       "faction": "M-E",
@@ -27571,7 +27571,7 @@
     },
     {
       "id": 21698,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Brig",
       "council": "N",
       "faction": "M-E",
@@ -27637,7 +27637,7 @@
     },
     {
       "id": 16948,
-      "canton": null,
+      "canton": "VS",
       "cantonName": "Westlich Raron",
       "council": "S",
       "faction": "M-E",
@@ -28077,7 +28077,7 @@
     },
     {
       "id": 18694,
-      "canton": null,
+      "canton": "SZ",
       "cantonName": "Ibach",
       "council": "N",
       "faction": "M-E",
