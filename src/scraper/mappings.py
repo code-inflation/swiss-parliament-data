@@ -1,53 +1,43 @@
 """Mapping functions for Swiss Parliament data."""
 
-import sys
-
 # Static fallback for entries the API-derived district map cannot resolve:
 # the 26 canton names themselves, plus "La Vallée" (a Vaud constituency that
 # the API only exposes under its French name with no canton body key).
-# On 3.15+ it's frozen (PEP 814 frozendict) so the fallback can't be mutated
-# at runtime; on 3.13/3.14 it's a plain dict.
-_CANTON_NAME_TO_CODE_DATA = {
-    "Aargau": "AG",
-    "Appenzell A.-Rh.": "AR",
-    "Appenzell Ausserrhoden": "AR",
-    "Appenzell I.-Rh.": "AI",
-    "Appenzell Innerrhoden": "AI",
-    "Basel-Landschaft": "BL",
-    "Basel-Stadt": "BS",
-    "Bern": "BE",
-    "Freiburg": "FR",
-    "Genf": "GE",
-    "Glarus": "GL",
-    "Graubünden": "GR",
-    "Jura": "JU",
-    "La Vallée": "VD",
-    "Luzern": "LU",
-    "Neuenburg": "NE",
-    "Nidwalden": "NW",
-    "Obwalden": "OW",
-    "Schaffhausen": "SH",
-    "Schwyz": "SZ",
-    "Solothurn": "SO",
-    "St. Gallen": "SG",
-    "Sankt Gallen": "SG",
-    "Tessin": "TI",
-    "Thurgau": "TG",
-    "Uri": "UR",
-    "Waadt": "VD",
-    "Wallis": "VS",
-    "Zug": "ZG",
-    "Zürich": "ZH",
-}
-
-if sys.version_info >= (3, 15):
-    # mypy/ruff are configured for 3.13, where the frozendict built-in
-    # doesn't exist yet, hence the ignore/noqa.
-    CANTON_NAME_TO_CODE: frozendict[str, str] = frozendict(  # type: ignore[valid-type,name-defined]  # noqa: F821
-        _CANTON_NAME_TO_CODE_DATA
-    )
-else:
-    CANTON_NAME_TO_CODE: dict[str, str] = dict(_CANTON_NAME_TO_CODE_DATA)
+# Frozen (PEP 814 frozendict) so the fallback can't be mutated at runtime.
+CANTON_NAME_TO_CODE: frozendict[str, str] = frozendict(
+    {
+        "Aargau": "AG",
+        "Appenzell A.-Rh.": "AR",
+        "Appenzell Ausserrhoden": "AR",
+        "Appenzell I.-Rh.": "AI",
+        "Appenzell Innerrhoden": "AI",
+        "Basel-Landschaft": "BL",
+        "Basel-Stadt": "BS",
+        "Bern": "BE",
+        "Freiburg": "FR",
+        "Genf": "GE",
+        "Glarus": "GL",
+        "Graubünden": "GR",
+        "Jura": "JU",
+        "La Vallée": "VD",
+        "Luzern": "LU",
+        "Neuenburg": "NE",
+        "Nidwalden": "NW",
+        "Obwalden": "OW",
+        "Schaffhausen": "SH",
+        "Schwyz": "SZ",
+        "Solothurn": "SO",
+        "St. Gallen": "SG",
+        "Sankt Gallen": "SG",
+        "Tessin": "TI",
+        "Thurgau": "TG",
+        "Uri": "UR",
+        "Waadt": "VD",
+        "Wallis": "VS",
+        "Zug": "ZG",
+        "Zürich": "ZH",
+    }
+)
 
 
 def get_canton_code(name: str | None, district_map: dict[str, str] | None = None) -> str | None:

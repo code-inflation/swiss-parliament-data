@@ -137,7 +137,7 @@ class ParliamentAPIClient:
         last_response.raise_for_status()
         raise RuntimeError("unreachable")  # pragma: no cover
 
-    def __enter__(self) -> "ParliamentAPIClient":
+    def __enter__(self) -> ParliamentAPIClient:
         """Context manager entry."""
         return self
 
