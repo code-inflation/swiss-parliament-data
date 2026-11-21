@@ -23,6 +23,12 @@ dev = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.uv]
+# Disable uv 0.13's default 7-day dependency cooldown (exclude-newer span)
+# so the committed lockfile is authoritative and CI's `uv sync --locked` / `uv
+# lock --check` never re-resolves on its own.
+exclude-newer = false
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/scraper"]
 
