@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Cleanup trap for temp files
 cleanup() {
-  rm -f "$tmp_groups" "$ids_file" 2>/dev/null || true
+  rm -f "$tmp_groups" "$ids_file" "$tmp_members_json" "$tmp_district_map" "${tmp_district_map}.json" 2>/dev/null || true
 }
 trap cleanup EXIT
 
@@ -45,6 +45,42 @@ fetch_groups() {
 }
 
 tmp_groups=$(mktemp)
+tmp_members_json=$(mktemp)
+tmp_district_map=$(mktemp)
+
+echo "Fetching electoral district → canton map..."
+district_offset=0
+while true; do
+  if response=$(curl -sf --retry 3 --retry-delay 5 -H "User-Agent: $user_agent" \
+    "$base_url/persons/group_by/electoral_districts?offset=$district_offset&limit=1000"); then
+    echo "$response" | jq -r '
+      .data[]
+      | select(.electoral_district.de != null and .electoral_district.de != "")
+      | [.electoral_district.de,
+         ([.body_keys[] | select(. == "AG" or . == "AI" or . == "AR" or . == "BE" or . == "BL" or . == "BS"
+            or . == "FR" or . == "GE" or . == "GL" or . == "GR" or . == "JU" or . == "LU"
+            or . == "NE" or . == "NW" or . == "OW" or . == "SG" or . == "SH" or . == "SO"
+            or . == "SZ" or . == "TG" or . == "TI" or . == "UR" or . == "VD" or . == "VS"
+            or . == "ZG" or . == "ZH")]
+         | unique
+         | if length == 1 then .[0] else "" end)]
+      | @tsv'
+  else
+    echo "WARNING: could not fetch electoral district map, falling back to static canton names only" >&2
+    break
+  fi
+  has_more=$(echo "$response" | jq -r '.meta.has_more')
+  [ "$has_more" = "true" ] || break
+  district_offset=$((district_offset + 1000))
+done > "$tmp_district_map"
+
+# Merge TSV lines into one JSON object, ignoring empty values when a real one exists
+jq -Rn '
+  [inputs | select(length > 0) | select(. | test("\t")) | split("\t") | {key: .[0], val: .[1]}]
+  | group_by(.key)
+  | map({(.[0].key): ([.[].val | select(. != "")] | unique | .[0] // null)})
+  | add // {}' "$tmp_district_map" > "${tmp_district_map}.json"
+
 fetch_groups > "$tmp_groups"
 
 if [ ! -s "$tmp_groups" ]; then
@@ -110,7 +146,9 @@ while read -r group; do
     offset=$((offset + limit))
   done
 
-  members_json=$(jq -s --arg faction_abbr "$faction_abbr" --arg faction_name "$faction_name" '
+  jq -s --arg faction_abbr "$faction_abbr" --arg faction_name "$faction_name" --slurpfile district_map "${tmp_district_map}.json" '
+    # District → canton lookup map from the API (empty object if fetch failed)
+    ($district_map[0] // {}) as $district_map |
     def lang_field($value):
       if ($value | type) == "object" then
         ($value.de // null)
@@ -118,8 +156,11 @@ while read -r group; do
         $value
       end;
 
+    # District → canton: dynamic API-derived map first, then static canton-name fallback.
+    # $district_map is a {"<district name>": "<canton code>"} object (or {} when unavailable).
     def canton_code($name):
       if $name == null then null
+      elif ($district_map[$name] // null) != null then $district_map[$name]
       elif $name == "Aargau" then "AG"
       elif $name == "Appenzell A.-Rh." or $name == "Appenzell Ausserrhoden" then "AR"
       elif $name == "Appenzell I.-Rh." or $name == "Appenzell Innerrhoden" then "AI"
@@ -131,6 +172,7 @@ while read -r group; do
       elif $name == "Glarus" then "GL"
       elif $name == "Graubünden" then "GR"
       elif $name == "Jura" then "JU"
+      elif $name == "La Vallée" then "VD"
       elif $name == "Luzern" then "LU"
       elif $name == "Neuenburg" then "NE"
       elif $name == "Nidwalden" then "NW"
@@ -174,10 +216,21 @@ while read -r group; do
           factionName: $faction_name,
           firstName: ($person.firstname // null),
           lastName: ($person.lastname // null),
-          number: (if ($person.external_alternative_id // null) == null then null else ($person.external_alternative_id | tonumber) end),
+          # Guard against non-numeric external_alternative_id values in upstream data
+          number: (if ($person.external_alternative_id // null) == null
+                   then null
+                   elif ($person.external_alternative_id | type) == "number" then $person.external_alternative_id
+                   elif (($person.external_alternative_id | type) == "string") and (($person.external_alternative_id | test("^[0-9]+(\\.[0-9]+)?$")))
+                   then ($person.external_alternative_id | tonumber)
+                   else null
+                   end),
           party: lang_field($person.party),
           partyName: lang_field($person.party_harmonized),
-          active: ($membership.active // null),
+          # Use explicit null check: "// null" would swallow active == false
+          active: (if $membership.active == null then null else $membership.active end),
+          # Membership validity period, as extracted from the API
+          startDate: ($membership.begin_date // null),
+          endDate: ($membership.end_date // null),
           code: null,
           gender: ($person.gender // null),
           officialDenomination: null,
@@ -185,23 +238,26 @@ while read -r group; do
           salutationTitle: null,
           factionFunction: faction_function(lang_field($membership.role_name))
         }
-    )' "$tmp_memberships")
+    )' "$tmp_memberships" > "$tmp_members_json"
 
-  rm -f "$tmp_memberships"
-
+  # Use a file + --slurpfile instead of --argjson to avoid hitting ARG_MAX
+  # ("Argument list too long") on large factions
   jq -n \
     --arg faction_id "$faction_id" \
     --arg faction_abbr "$faction_abbr" \
     --arg faction_name "$faction_name" \
-    --argjson members "$members_json" \
+    --slurpfile members "$tmp_members_json" \
     '{
       id: ($faction_id | tonumber),
       abbreviation: $faction_abbr,
       code: ("FRA_" + $faction_id + "_"),
-      members: $members,
+      members: $members[0],
       name: $faction_name,
       shortName: ("Fraktion " + $faction_abbr)
     }' > "$output_dir/faction_$faction_id.json"
+
+  rm -f "$tmp_members_json"
+  rm -f "$tmp_memberships"
 done < "$tmp_groups"
 
 rm -f "$tmp_groups" "$ids_file"
