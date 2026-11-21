@@ -51,7 +51,7 @@ uv run pytest              # verify, then commit uv.lock
 Run the scraper locally:
 
 ```bash
-uv run --frozen python -m scraper.main
+uv run --frozen python -m scraper
 ```
 
 ### Development Commands

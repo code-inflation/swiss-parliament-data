@@ -1,9 +1,13 @@
 """Mapping functions for Swiss Parliament data."""
 
+import sys
+
 # Static fallback for entries the API-derived district map cannot resolve:
 # the 26 canton names themselves, plus "La Vallée" (a Vaud constituency that
 # the API only exposes under its French name with no canton body key).
-CANTON_NAME_TO_CODE = {
+# On 3.15+ it's frozen (PEP 814 frozendict) so the fallback can't be mutated
+# at runtime; on 3.13/3.14 it's a plain dict.
+_CANTON_NAME_TO_CODE_DATA = {
     "Aargau": "AG",
     "Appenzell A.-Rh.": "AR",
     "Appenzell Ausserrhoden": "AR",
@@ -35,6 +39,15 @@ CANTON_NAME_TO_CODE = {
     "Zug": "ZG",
     "Zürich": "ZH",
 }
+
+if sys.version_info >= (3, 15):
+    # mypy/ruff are configured for 3.13, where the frozendict built-in
+    # doesn't exist yet, hence the ignore/noqa.
+    CANTON_NAME_TO_CODE: frozendict[str, str] = frozendict(  # type: ignore[valid-type,name-defined]  # noqa: F821
+        _CANTON_NAME_TO_CODE_DATA
+    )
+else:
+    CANTON_NAME_TO_CODE: dict[str, str] = dict(_CANTON_NAME_TO_CODE_DATA)
 
 
 def get_canton_code(name: str | None, district_map: dict[str, str] | None = None) -> str | None:
@@ -69,12 +82,7 @@ def get_council_code(sector: str | None) -> str | None:
     if sector is None:
         return None
 
-    council_map = {
-        "NR": "N",  # National Council
-        "SR": "S",  # States Council
-    }
-
-    return council_map.get(sector)
+    return {"NR": "N", "SR": "S"}.get(sector)  # NR: National Council, SR: States Council
 
 
 def get_faction_function(role: str | None) -> int | None:
@@ -82,13 +90,7 @@ def get_faction_function(role: str | None) -> int | None:
     if role is None:
         return None
 
-    function_map = {
-        "Mitglied": 1,  # Member
-        "Präsident/in": 2,  # President
-        "Vizepräsident/in": 11,  # Vice President
-    }
-
-    return function_map.get(role)
+    return {"Mitglied": 1, "Präsident/in": 2, "Vizepräsident/in": 11}.get(role)
 
 
 def extract_language_field(value: dict[str, str] | str | None) -> str | None:
