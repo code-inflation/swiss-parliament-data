@@ -31,20 +31,8 @@ Install dependencies with UV:
 uv sync --frozen
 ```
 
-Dependencies are pinned in `uv.lock` and installed exactly as committed
-(`--frozen` never re-resolves). uv's default 7-day dependency cooldown
-applies whenever resolution happens, so freshly published releases are
-picked up only after they've been out for about a week.
-
-#### Updating dependencies (manual)
-
-Dependency bumps are deliberate, not automatic:
-
-```bash
-uv lock --upgrade          # re-resolve within the 7-day cooldown window
-uv sync --frozen           # or: uv sync (rebuilds .venv from the new lock)
-uv run pytest              # verify, then commit uv.lock
-```
+Dependencies are pinned in `uv.lock`. To update them, run `uv lock --upgrade`,
+then commit the result.
 
 ### Running the Scraper
 

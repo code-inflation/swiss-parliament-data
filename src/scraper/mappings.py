@@ -3,7 +3,6 @@
 # Static fallback for entries the API-derived district map cannot resolve:
 # the 26 canton names themselves, plus "La Vallée" (a Vaud constituency that
 # the API only exposes under its French name with no canton body key).
-# Frozen (PEP 814 frozendict) so the fallback can't be mutated at runtime.
 CANTON_NAME_TO_CODE: frozendict[str, str] = frozendict(
     {
         "Aargau": "AG",
