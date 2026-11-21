@@ -114,3 +114,62 @@ class TestProcessMemberships:
         assert members[1].firstName == "Maria"
         assert members[0].active is True
         assert members[1].active is False
+
+    def test_membership_dates_extracted(self) -> None:
+        """Test that begin_date/end_date map to startDate/endDate."""
+        person = PersonData(id=1, firstname="Hans", lastname="Müller")
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=False,
+            begin_date="2019-12-02",
+            end_date="2023-12-03",
+        )
+
+        members = process_memberships([membership], "SVP", "Test")
+
+        assert members[0].startDate == "2019-12-02"
+        assert members[0].endDate == "2023-12-03"
+
+    def test_missing_dates_are_none(self) -> None:
+        """Test that missing begin_date/end_date map to None."""
+        person = PersonData(id=1, firstname="Hans", lastname="Müller")
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        members = process_memberships([membership], "SVP", "Test")
+
+        assert members[0].startDate is None
+        assert members[0].endDate is None
+
+    def test_canton_from_district_map(self) -> None:
+        """Constituency names resolve to cantons via the district map."""
+        person = PersonData(
+            id=1,
+            firstname="Maja",
+            lastname="Riniker",
+            electoral_district={"de": "Aarau"},
+        )
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        members = process_memberships([membership], "SVP", "Test", district_map={"Aarau": "AG"})
+
+        assert members[0].canton == "AG"
+        assert members[0].cantonName == "Aarau"
+
+    def test_non_numeric_person_number(self) -> None:
+        """Test the upstream "barthassat" style ID does not crash and maps to None."""
+        person = PersonData(id=6507, external_alternative_id="barthassat")
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        members = process_memberships([membership], "MITTE", "Die Mitte")
+
+        assert members[0].number is None
+        assert members[0].id == 6507

@@ -5,9 +5,48 @@ from typing import Any
 
 import httpx
 
-from scraper.models import GroupData, GroupResponse, MembershipData, MembershipResponse
+from scraper.models import (
+    DistrictMapResponse,
+    GroupData,
+    GroupResponse,
+    MembershipData,
+    MembershipResponse,
+)  # noqa: E501
 
 logger = logging.getLogger(__name__)
+
+# Official two-letter canton codes, used to identify canton bodies in the
+# district map fetched from /persons/group_by/electoral_districts.
+CANTON_CODES = frozenset(
+    [
+        "AG",
+        "AI",
+        "AR",
+        "BE",
+        "BL",
+        "BS",
+        "FR",
+        "GE",
+        "GL",
+        "GR",
+        "JU",
+        "LU",
+        "NE",
+        "NW",
+        "OW",
+        "SG",
+        "SH",
+        "SO",
+        "SZ",
+        "TG",
+        "TI",
+        "UR",
+        "VD",
+        "VS",
+        "ZG",
+        "ZH",
+    ]
+)
 
 
 class ParliamentAPIClient:
@@ -86,7 +125,7 @@ class ParliamentAPIClient:
         return groups
 
     def fetch_memberships(self, group_id: int) -> list[MembershipData]:
-        """Fetch memberships for a specific group.
+        """Fetch all memberships for a specific group (active and historical).
 
         Args:
             group_id: The group ID to fetch memberships for
@@ -126,6 +165,53 @@ class ParliamentAPIClient:
                 break
 
         return memberships
+
+    def fetch_district_map(self) -> dict[str, str]:
+        """Fetch a mapping from electoral district name to canton code.
+
+        The API's electoral_district field often contains constituency names
+        (e.g. "Aarau", "Kleinbasel", "IX Horgen") rather than canton names, so
+        the canton cannot be derived from the person record alone. This endpoint
+        groups all persons by district and exposes the associated body keys,
+        among which the two-letter canton code can be identified.
+
+        Returns:
+            Mapping of district name to canton code. Entries where the canton
+            is ambiguous (multiple canton body keys) are omitted. Returns an
+            empty dict if the fetch fails (static fallback still applies).
+        """
+        cantons_by_district: dict[str, set[str]] = {}
+
+        try:
+            # The group_by endpoint ignores limit/offset and returns all
+            # buckets in one page, so a single request suffices.
+            response = self.client.get(
+                f"{self.BASE_URL}/persons/group_by/electoral_districts",
+                params={"limit": self.LIMIT},
+            )
+            response.raise_for_status()
+            district_response = DistrictMapResponse.model_validate(response.json())
+        except (httpx.HTTPError, ValueError) as e:
+            logger.warning(
+                "Could not fetch electoral district map, "
+                f"falling back to static canton names only: {e}"
+            )
+            return {}
+
+        for entry in district_response.data:
+            name = (entry.electoral_district or {}).get("de")
+            if not name:
+                continue
+            found = cantons_by_district.setdefault(name, set())
+            found.update(k for k in entry.body_keys if k in CANTON_CODES)
+
+        # Drop ambiguous districts (e.g. "Stein" exists in AR and SH) rather
+        # than guessing, and represent resolvable ones as a single code.
+        district_map: dict[str, str] = {}
+        for name, cantons in sorted(cantons_by_district.items()):
+            if len(cantons) == 1:
+                district_map[name] = next(iter(cantons))
+        return district_map
 
     def close(self) -> None:
         """Close the HTTP client."""

@@ -40,6 +40,27 @@ class TestCantonCode:
         """Test that None input returns None."""
         assert get_canton_code(None) is None
 
+    def test_district_map_takes_precedence(self) -> None:
+        """Constituency names resolve via the API-derived district map."""
+        district_map = {"Aarau": "AG", "Kleinbasel": "BS", "IX Horgen": "ZH"}
+        assert get_canton_code("Aarau", district_map) == "AG"
+        assert get_canton_code("Kleinbasel", district_map) == "BS"
+        assert get_canton_code("IX Horgen", district_map) == "ZH"
+
+    def test_district_map_falls_back_to_static(self) -> None:
+        """Names absent from the district map fall back to the static map."""
+        assert get_canton_code("Bern", {"Aarau": "AG"}) == "BE"
+        assert get_canton_code("La Vallée", {}) == "VD"
+
+    def test_district_map_unresolvable_returns_none(self) -> None:
+        """Unknown constituency names with an (empty) map return None."""
+        assert get_canton_code("Unknown District", {"Aarau": "AG"}) is None
+
+    def test_empty_map_only(self) -> None:
+        """An empty district map behaves like the legacy static-only lookup."""
+        assert get_canton_code("Zürich", {}) == "ZH"
+        assert get_canton_code("Kleinbasel", {}) is None
+
 
 class TestCouncilCode:
     """Tests for council code mapping."""

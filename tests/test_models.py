@@ -1,10 +1,13 @@
 """Tests for data models."""
 
 from scraper.models import (
+    DistrictMapEntry,
+    DistrictMapResponse,
     Faction,
     GroupData,
     GroupResponse,
     Member,
+    MembershipData,
     MetaResponse,
     PersonData,
 )
@@ -182,3 +185,74 @@ class TestFaction:
         )
         assert len(faction.members) == 1
         assert faction.members[0].faction == "SVP"
+
+
+class TestMembershipDates:
+    """Tests for membership begin/end date fields."""
+
+    def test_dates_parsed(self) -> None:
+        """Test begin_date and end_date are captured from API payload."""
+        membership = MembershipData.model_validate(
+            {
+                "person": {"data": []},
+                "active": False,
+                "begin_date": "2019-12-02",
+                "end_date": "2023-12-03",
+            }
+        )
+        assert membership.begin_date == "2019-12-02"
+        assert membership.end_date == "2023-12-03"
+
+    def test_missing_dates_optional(self) -> None:
+        """Test begin_date/end_date default to None when absent."""
+        membership = MembershipData.model_validate({"person": {"data": []}})
+        assert membership.begin_date is None
+        assert membership.end_date is None
+
+
+class TestDistrictMapModels:
+    """Tests for the group_by electoral_districts response models."""
+
+    def test_entry_with_district_and_bodies(self) -> None:
+        """Test a district bucket with de name and body keys."""
+        entry = DistrictMapEntry.model_validate(
+            {
+                "electoral_district": {"de": "IX Horgen"},
+                "body_keys": ["293", "ZH", "CHE"],
+            }
+        )
+        assert entry.electoral_district is not None
+        assert entry.electoral_district["de"] == "IX Horgen"
+        assert "ZH" in entry.body_keys
+
+    def test_entry_without_de_name(self) -> None:
+        """Test a bucket missing the de name (fr-only districts)."""
+        entry = DistrictMapEntry.model_validate(
+            {"electoral_district": {"fr": "Morges"}, "body_keys": ["CHE"]}
+        )
+        assert entry.electoral_district is not None
+        assert "de" not in entry.electoral_district
+
+    def test_entry_with_empty_district(self) -> None:
+        """Test the null-district bucket (empty object)."""
+        entry = DistrictMapEntry.model_validate({"electoral_district": {}, "body_keys": []})
+        assert entry.electoral_district == {}
+
+    def test_response_meta_without_has_more(self) -> None:
+        """The group_by endpoint's meta has no has_more; parsing must not require it."""
+        response = DistrictMapResponse.model_validate(
+            {
+                "data": [{"electoral_district": {"de": "Aarau"}, "body_keys": ["AG"]}],
+                "meta": {"total_records": 521},
+            }
+        )
+        assert len(response.data) == 1
+        assert response.meta is not None
+        assert response.meta.total_records == 521
+
+    def test_response_without_meta(self) -> None:
+        """Test that a missing meta block is tolerated."""
+        response = DistrictMapResponse.model_validate(
+            {"data": [{"electoral_district": {"de": "Aarau"}, "body_keys": ["AG"]}]}
+        )
+        assert response.meta is None

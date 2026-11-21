@@ -52,6 +52,8 @@ class MembershipData(BaseModel):
     person: PersonWrapper
     active: bool | None = None
     role_name: dict[str, str] | str | None = None
+    begin_date: str | None = None
+    end_date: str | None = None
 
 
 class MembershipResponse(BaseModel):
@@ -59,6 +61,30 @@ class MembershipResponse(BaseModel):
 
     data: list[MembershipData]
     meta: MetaResponse
+
+
+class DistrictMapEntry(BaseModel):
+    """One electoral district bucket from the group_by endpoint."""
+
+    electoral_district: dict[str, str] | None = None
+    body_keys: list[str] = []
+
+
+class DistrictMapMeta(BaseModel):
+    """Pagination metadata for the group_by endpoint (no has_more field)."""
+
+    total_records: int
+
+
+class DistrictMapResponse(BaseModel):
+    """API response for the persons group_by electoral_districts endpoint.
+
+    Note: the group_by endpoint ignores limit/offset and always returns all
+    buckets in a single page, so its meta has no has_more field.
+    """
+
+    data: list[DistrictMapEntry]
+    meta: DistrictMapMeta | None = None
 
 
 class Member(BaseModel):
@@ -76,6 +102,8 @@ class Member(BaseModel):
     party: str | None = None
     partyName: str | None = None
     active: bool | None = None
+    startDate: str | None = None
+    endDate: str | None = None
     code: None = None
     gender: str | None = None
     officialDenomination: None = None
