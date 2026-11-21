@@ -3,7 +3,6 @@
 import contextlib
 import logging
 import time
-from typing import Any
 
 import httpx
 
@@ -126,7 +125,7 @@ class ParliamentAPIClient:
                     # honor it over our default when parseable.
                     retry_after = last_response.headers.get("Retry-After")
                     if retry_after is not None:
-                        with contextlib.suppress(ValueError):
+                        with contextlib.suppress(ValueError, TypeError):
                             delay = float(retry_after)
                 status = last_response.status_code if last_response else "connection error"
                 logger.warning(
@@ -138,11 +137,11 @@ class ParliamentAPIClient:
         last_response.raise_for_status()
         raise RuntimeError("unreachable")  # pragma: no cover
 
-    def __enter__(self) -> "ParliamentAPIClient":
+    def __enter__(self) -> ParliamentAPIClient:
         """Context manager entry."""
         return self
 
-    def __exit__(self, *args: Any) -> None:
+    def __exit__(self, *exc_info: object) -> None:
         """Context manager exit."""
         self.client.close()
 

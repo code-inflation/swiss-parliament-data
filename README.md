@@ -28,15 +28,18 @@ This project uses modern Python tooling:
 Install dependencies with UV:
 
 ```bash
-uv sync
+uv sync --frozen
 ```
+
+Dependencies are pinned in `uv.lock`. To update them, run `uv lock --upgrade`,
+then commit the result.
 
 ### Running the Scraper
 
 Run the scraper locally:
 
 ```bash
-uv run python -m scraper.main
+uv run --frozen python -m scraper
 ```
 
 ### Development Commands
@@ -44,20 +47,20 @@ uv run python -m scraper.main
 Run linting:
 
 ```bash
-uv run ruff check .
-uv run ruff format .
+uv run --frozen ruff check .
+uv run --frozen ruff format .
 ```
 
 Run type checking:
 
 ```bash
-uv run mypy --package scraper
+uv run --frozen mypy --package scraper
 ```
 
 Run tests:
 
 ```bash
-uv run pytest
+uv run --frozen pytest
 ```
 
 ### Project Structure

@@ -3,38 +3,40 @@
 # Static fallback for entries the API-derived district map cannot resolve:
 # the 26 canton names themselves, plus "La Vallée" (a Vaud constituency that
 # the API only exposes under its French name with no canton body key).
-CANTON_NAME_TO_CODE = {
-    "Aargau": "AG",
-    "Appenzell A.-Rh.": "AR",
-    "Appenzell Ausserrhoden": "AR",
-    "Appenzell I.-Rh.": "AI",
-    "Appenzell Innerrhoden": "AI",
-    "Basel-Landschaft": "BL",
-    "Basel-Stadt": "BS",
-    "Bern": "BE",
-    "Freiburg": "FR",
-    "Genf": "GE",
-    "Glarus": "GL",
-    "Graubünden": "GR",
-    "Jura": "JU",
-    "La Vallée": "VD",
-    "Luzern": "LU",
-    "Neuenburg": "NE",
-    "Nidwalden": "NW",
-    "Obwalden": "OW",
-    "Schaffhausen": "SH",
-    "Schwyz": "SZ",
-    "Solothurn": "SO",
-    "St. Gallen": "SG",
-    "Sankt Gallen": "SG",
-    "Tessin": "TI",
-    "Thurgau": "TG",
-    "Uri": "UR",
-    "Waadt": "VD",
-    "Wallis": "VS",
-    "Zug": "ZG",
-    "Zürich": "ZH",
-}
+CANTON_NAME_TO_CODE: frozendict[str, str] = frozendict(
+    {
+        "Aargau": "AG",
+        "Appenzell A.-Rh.": "AR",
+        "Appenzell Ausserrhoden": "AR",
+        "Appenzell I.-Rh.": "AI",
+        "Appenzell Innerrhoden": "AI",
+        "Basel-Landschaft": "BL",
+        "Basel-Stadt": "BS",
+        "Bern": "BE",
+        "Freiburg": "FR",
+        "Genf": "GE",
+        "Glarus": "GL",
+        "Graubünden": "GR",
+        "Jura": "JU",
+        "La Vallée": "VD",
+        "Luzern": "LU",
+        "Neuenburg": "NE",
+        "Nidwalden": "NW",
+        "Obwalden": "OW",
+        "Schaffhausen": "SH",
+        "Schwyz": "SZ",
+        "Solothurn": "SO",
+        "St. Gallen": "SG",
+        "Sankt Gallen": "SG",
+        "Tessin": "TI",
+        "Thurgau": "TG",
+        "Uri": "UR",
+        "Waadt": "VD",
+        "Wallis": "VS",
+        "Zug": "ZG",
+        "Zürich": "ZH",
+    }
+)
 
 
 def get_canton_code(name: str | None, district_map: dict[str, str] | None = None) -> str | None:
@@ -69,12 +71,7 @@ def get_council_code(sector: str | None) -> str | None:
     if sector is None:
         return None
 
-    council_map = {
-        "NR": "N",  # National Council
-        "SR": "S",  # States Council
-    }
-
-    return council_map.get(sector)
+    return {"NR": "N", "SR": "S"}.get(sector)  # NR: National Council, SR: States Council
 
 
 def get_faction_function(role: str | None) -> int | None:
@@ -82,13 +79,7 @@ def get_faction_function(role: str | None) -> int | None:
     if role is None:
         return None
 
-    function_map = {
-        "Mitglied": 1,  # Member
-        "Präsident/in": 2,  # President
-        "Vizepräsident/in": 11,  # Vice President
-    }
-
-    return function_map.get(role)
+    return {"Mitglied": 1, "Präsident/in": 2, "Vizepräsident/in": 11}.get(role)
 
 
 def extract_language_field(value: dict[str, str] | str | None) -> str | None:

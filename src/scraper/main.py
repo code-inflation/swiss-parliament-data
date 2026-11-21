@@ -4,8 +4,8 @@ import contextlib
 import json
 import logging
 import sys
-from collections.abc import Callable
 from pathlib import Path
+lazy from collections.abc import Callable
 
 import httpx
 
