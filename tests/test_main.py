@@ -1,0 +1,219 @@
+"""Tests for main scraper logic."""
+
+from typing import Any
+
+from scraper.main import process_memberships
+from scraper.models import MembershipData, PersonData, PersonWrapper
+
+
+class TestProcessMemberships:
+    """Tests for process_memberships function."""
+
+    def test_empty_memberships(self) -> None:
+        """Test processing empty membership list."""
+        members = process_memberships([], "SVP", "Schweizerische Volkspartei")
+        assert members == []
+
+    def test_membership_without_person_data(self) -> None:
+        """Test membership with no person data."""
+        membership = MembershipData(
+            person=PersonWrapper(data=[]),
+            active=True,
+        )
+        members = process_memberships([membership], "SVP", "Test")
+        assert members == []
+
+    def test_single_membership(self) -> None:
+        """Test processing single membership."""
+        person = PersonData(
+            id=1,
+            firstname="Hans",
+            lastname="Müller",
+            external_alternative_id="456",
+            electoral_district="Zürich",
+            parliament_sector="NR",
+            party="SVP",
+            party_harmonized="SVP",
+            gender="m",
+        )
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+            role_name="Mitglied",
+        )
+
+        members = process_memberships([membership], "SVP", "Schweizerische Volkspartei")
+
+        assert len(members) == 1
+        member = members[0]
+        assert member.id == 1
+        assert member.firstName == "Hans"
+        assert member.lastName == "Müller"
+        assert member.number == 456
+        assert member.faction == "SVP"
+        assert member.factionName == "Schweizerische Volkspartei"
+        assert member.canton == "ZH"
+        assert member.council == "N"
+        assert member.factionFunction == 1
+
+    def test_multilingual_fields(self) -> None:
+        """Test processing membership with multilingual fields."""
+        person = PersonData(
+            id=1,
+            electoral_district={"de": "Genf", "fr": "Genève"},
+            party={"de": "SP", "fr": "PS"},
+            party_harmonized={"de": "SP"},
+        )
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+            role_name={"de": "Präsident/in", "fr": "Président/e"},
+        )
+
+        members = process_memberships([membership], "SP", "Sozialdemokratische Partei")
+
+        assert len(members) == 1
+        member = members[0]
+        assert member.cantonName == "Genf"
+        assert member.canton == "GE"
+        assert member.party == "SP"
+        assert member.factionFunction == 2
+
+    def test_invalid_person_number(self) -> None:
+        """Test handling of invalid person number."""
+        person = PersonData(
+            id=1,
+            external_alternative_id="invalid",
+        )
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        members = process_memberships([membership], "TEST", "Test")
+
+        assert len(members) == 1
+        assert members[0].number is None
+
+    def test_multiple_memberships(self) -> None:
+        """Test processing multiple memberships."""
+        person1 = PersonData(id=1, firstname="Hans", lastname="Müller")
+        person2 = PersonData(id=2, firstname="Maria", lastname="Schmidt")
+
+        membership1 = MembershipData(
+            person=PersonWrapper(data=[person1]),
+            active=True,
+        )
+        membership2 = MembershipData(
+            person=PersonWrapper(data=[person2]),
+            active=False,
+        )
+
+        members = process_memberships([membership1, membership2], "SVP", "Test")
+
+        assert len(members) == 2
+        assert members[0].firstName == "Hans"
+        assert members[1].firstName == "Maria"
+        assert members[0].active is True
+        assert members[1].active is False
+
+    def test_membership_dates_extracted(self) -> None:
+        """Test that begin_date/end_date map to startDate/endDate."""
+        person = PersonData(id=1, firstname="Hans", lastname="Müller")
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=False,
+            begin_date="2019-12-02",
+            end_date="2023-12-03",
+        )
+
+        members = process_memberships([membership], "SVP", "Test")
+
+        assert members[0].startDate == "2019-12-02"
+        assert members[0].endDate == "2023-12-03"
+
+    def test_missing_dates_are_none(self) -> None:
+        """Test that missing begin_date/end_date map to None."""
+        person = PersonData(id=1, firstname="Hans", lastname="Müller")
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        members = process_memberships([membership], "SVP", "Test")
+
+        assert members[0].startDate is None
+        assert members[0].endDate is None
+
+    def test_canton_from_district_map(self) -> None:
+        """Constituency names resolve to cantons via the district map."""
+        person = PersonData(
+            id=1,
+            firstname="Maja",
+            lastname="Riniker",
+            electoral_district={"de": "Aarau"},
+        )
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        members = process_memberships([membership], "SVP", "Test", district_map={"Aarau": "AG"})
+
+        assert members[0].canton == "AG"
+        assert members[0].cantonName == "Aarau"
+
+    def test_non_numeric_person_number(self) -> None:
+        """Test the upstream "barthassat" style ID does not crash and maps to None."""
+        person = PersonData(id=6507, external_alternative_id="barthassat")
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        members = process_memberships([membership], "MITTE", "Die Mitte")
+
+        assert members[0].number is None
+        assert members[0].id == 6507
+
+
+class TestProcessMembershipsWarnings:
+    """Tests for warning behavior on unresolvable data."""
+
+    def test_unmapped_district_warns_once_per_district(self, caplog: Any) -> None:
+        """Unknown constituency names are collected and warned about."""
+        import logging
+
+        person = PersonData(
+            id=1,
+            lastname="Riniker",
+            electoral_district={"de": "Atlantis"},
+        )
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        with caplog.at_level(logging.WARNING):
+            members = process_memberships([membership], "SVP", "Test", district_map={})
+
+        assert members[0].canton is None
+        assert members[0].cantonName == "Atlantis"
+        warnings = [r.message for r in caplog.records if "Atlantis" in r.message]
+        assert len(warnings) == 1
+        assert "Unmapped electoral district" in warnings[0]
+
+    def test_known_district_does_not_warn(self, caplog: Any) -> None:
+        """Resolvable districts produce no warnings."""
+        import logging
+
+        person = PersonData(id=1, electoral_district={"de": "Aarau"})
+        membership = MembershipData(
+            person=PersonWrapper(data=[person]),
+            active=True,
+        )
+
+        with caplog.at_level(logging.WARNING):
+            process_memberships([membership], "SVP", "Test", district_map={"Aarau": "AG"})
+
+        assert not [r for r in caplog.records if r.levelno >= logging.WARNING]
